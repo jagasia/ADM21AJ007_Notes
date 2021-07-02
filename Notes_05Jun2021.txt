@@ -1,0 +1,251 @@
+	so far, we created Servlet programs	
+
+		java class that can contain html code
+
+	PrintWriter out=response.getWriter();
+	out.print("Click <a href=\"login.html\"> here </a>to go to home page");
+
+sometimes, this <a> is printed in the browser rather than making it a hyper link.
+
+	response.setContentType("text/html");
+
+
+
+looking at the above code, we find a java program containing html code inside
+
+
+
+jsp
+	Java Server Pages
+
+
+
+	we write HTML code, inside which we embed Java code
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+
+
+this above line differentiates a JSP file from a HTML file
+
+what is this line?
+	this is called as "directive"
+	
+	Page directive informs the runtime that this page is coded in java and content type is text/html character set is ISO/ ascii or utf-8
+
+
+
+<%	%>
+	this is called as scriplet		inside this scriplet tag, we can write java code
+
+
+in JSP,
+	we do not need to declare the below code:
+		PrintWriter out=response.getWriter();
+
+	it is automatically done by container 
+
+	not only "out" variable,
+
+	lot of variables are already present. we do not need to declare
+
+they are called as implicit objects
+
+	request
+	response
+	application
+	session
+	out
+	
+
+these are implicit objects
+
+
+JSP building blocks:
+
+	scriplet			<%	%>
+	declaration			<%!	%>
+	comment				<%--	--%>
+	expression			<%=	%>
+	directive			<%@	%>
+
+
+Expression:
+
+	<%=20 %>		this will be equal to 				out.print(20);
+	
+Directive:
+
+	<%@page
+	<%@include
+	<%@taglib
+
+	only 3 directives present in  a jsp file
+
+
+
+how we can display dynamic content in html input controls?
+	
+	response.sendRedirect()		method is used to redirect to other pages using java servlet code
+
+
+
+Branch ID: <input type=text name=bid class="form-control" value="<%=bid %>" /> Branch
+
+
+if bid variable is not initialized then we have problem
+
+jsp provides EL		(Expression language) to shorten thse codes
+
+${}			this is EL
+
+
+in expression language	
+	request.getParameter("bid")		is 		${param.bid}
+
+
+
+
+JSTL		
+	JSP standard Tag Library
+
+
+	why we need this?
+
+	in HTML code, how can we write
+		if condition?
+		for loop?
+
+	
+	
+what is JSTL?
+	it is a custom tag library
+
+	what is custom tag?		any tag other than HTML is a custom tag
+
+	jsp language has created lot of such tags
+
+	<jsp:include>
+	<jsp:forward>			thse are called as action tags
+
+	we need to download jstl jar file
+
+	1.1
+	1.2
+
+	we use 1.2
+
+how do you add jar file to a dynamic web project?
+	in java project, we add jar files in "build path"
+	but in dynamic web project?		we add jar files into the "WEB-INF/lib" folder
+
+
+we can add jstl library in our jsp file, by using
+	taglib directive
+
+	lot of JSTL libraries
+		ex
+			core
+			sql
+			format
+			
+
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+
+	for (Branch b : branchList) {
+						
+						%>
+						<TR>
+						<%
+						out.println("<TR>");
+						out.println("<TD>");
+						out.print(b.getBid());
+						out.println("</TD>");
+						out.println("<TD>");
+						out.print(b.getBname());
+						out.println("</TD>");
+						out.println("<TD>");
+						out.print(b.getBcity());
+						out.println("</TD>");
+						out.println("<TD><a href=\"branch?btn=Select&bid=" + b.getBid() + "\">Select</a></TD>");
+						out.println("</TR>");
+					}
+
+
+
+
+
+in oracle
+	BLOB				for binary data
+	CLOB				for character data
+
+in mysql
+	tinyblob
+	mediumblob
+	longblob
+
+CREATE TABLE branch1
+(
+	bid char(6) primary key,
+    bname varchar(20),
+    bcity varchar(20),
+    pic longblob
+);
+
+
+
+
+
+FORM ACTION=GET
+
+GET Method cannot send multi part form data			(large objects are sent in multiparts)
+
+use POST method when we upload file
+
+		<form method="POST" action="branch" enctype="multipart/form-data">
+
+@MultipartConfig
+	use this annotation on the servlet		(or controller)
+
+
+
+how we retrieve the image byte[] from the input type=file?
+
+	Part part=request.getPart("pic");
+
+	FileInputStream fis=	part.getInputStream();
+	first of all, we need to declare 		byte []		but what is the size of this array?
+		size of the file?
+	fis.available()			this method returns the no of bytes
+
+
+
+
+whenever you want to display the picture (not when we have a file)
+	if you have a picture file, then it is simple
+		<img src=filename.jpg" />
+
+	but here, how do you display a picture from byte[]		?????
+	not possible,
+		so we convert the byte[] into a base 64 string, which can be displayed in <img> 
+
+	how can i convert byte[] into a base 64 string?
+
+	

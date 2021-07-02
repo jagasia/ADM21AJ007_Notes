@@ -1,0 +1,809 @@
+Collections  with Generics
+	when java versions 
+		1.1		1.2		upto 1.4
+
+there were no generics. 
+There were only Object type collections.
+
+ex:
+	List marks=new ArrayList();			//this is upto java version 1.4 	(non generic)
+
+	List<Integer> marks=new ArrayList<Integer>();	//this is from java version 1.5 to 1.6 
+	
+	List<Integer> marks=new ArrayList<>();		//this is from java version 1.7 onwards
+
+what difference we see in the above 3 declarations.
+
+first one (is an example for non-generic collection)
+	List marks=new ArrayList();			//this is upto java version 1.4 	
+
+	here, we are actually adding objects into the arraylist
+
+	marks.add("Rama");
+	marks.add(20);
+	marks.add(1.2);
+	marks.add(new Date());
+	marks.add(new Employee());
+
+what is this?????	very peculiar. THat means, can i add any type of data inside an array list?
+	NO. Whatever we add, 
+	String or Integer or Float or Date or Employee or anything, 
+	they are cast automatically to Object type and then added into the list
+
+	so non generic collections are of Object type.
+
+I told
+	Arrays are fixed length, but array lists are dynamic memory allocation
+
+they said,
+	in arrays, you can add only same type of data
+	in arraylist , you can add any type of data. 	(I DO NOT AGREE)
+
+	i did not agree because, that is not a difference between array and array list.
+	every collection in this world is homogeneous only
+
+	marks.add(x);		//x can be any type. but it is cast into Object while adding. Finally this array list contains
+	only 1 type that is Object type
+
+	even in array, Object type array is possible
+
+	Object arr[]=new Object[10];		//we can add String, Date, Integer, Employee anything into this
+
+
+
+Why it is called non generic?
+	because, it supports only 1 type of data to be added, i.e., Object type
+
+java 1.5 onwards,
+	Generic collections were introduced.
+		it changed from 		ArrayList to ArrayList<Integer>
+
+	so it was fixing the type of data to be added. SO how can we call it as generic?
+
+	it is called as generics, because, those who created this ArrayList (or any collection class), 
+	they did not create it for a specific type only. they allowed us to choose any type while creating object 
+
+	Generic:
+		ArrayList<Integer>
+		ArrayList<Employee>
+		ArrayList<String>
+
+it is multi purpose, not to a specific type (Object)
+
+THERE IS NO PRIMITIVE COLLECTION possible
+	ie.,
+		ArrayList<Integer> 	is ALLOWED But		ArrayList<int>	is NEVER ALLOWED
+
+List
+Set
+Map
+	ArrayList marks=new ArrayList();		this is object type. we can add any type of data	
+		marks.add("Rama");
+	marks.add(20);
+	marks.add(1.2);
+	marks.add(new Date());
+	marks.add(new Employee());
+
+Restricting the ArrayList  Type
+	ArrayList<String> countries=new ArrayList<>();
+
+
+Inserting  and Replacing  Objects
+
+ArrayList<String> countries=new ArrayList<>();
+		countries.add("Ceylon");
+		countries.add("Bharath");
+		System.out.println(countries);
+		countries.set(0, "Sri lanka");
+		countries.set(1, "India");
+		System.out.println(countries);
+
+
+
+		ArrayList<String> countries=new ArrayList<>();
+		countries.add("Ceylon");
+		countries.add("Bharath");
+		System.out.println(countries);
+		countries.set(0, "Sri lanka");
+		countries.set(1, "India");
+		System.out.println(countries);
+		
+		List<String> x=new ArrayList<String>();
+	x.addAll(countries);
+		System.out.println(x);
+--------------------------------------------------
+ArrayList<String> countries=new ArrayList<>();
+		countries.add("India");
+		countries.add("Australia");
+		countries.add("Sri lanka");
+		countries.add("Pakistan");
+		countries.add("China");
+		countries.add("Bangladesh");
+		countries.add("Japan");
+		
+		if(countries.contains("Japan"))
+			System.out.println("Japan is found");
+		else
+			System.out.println("Japan is NOT found");
+
+
+---------------
+
+a==b
+	compares the ref of a and b (if a and b are ref types)
+
+a.equals(b);
+	compares the values of a and b		
+
+the collection method
+	employeeList.contains(x)
+
+this contains method, uses the equals method to decide the equLity
+
+by overriding equals method of Employee class, we educate java that if this property is same, then the objects are same
+
+
+whenever you use, contains method,
+	if it is predefined type, then it will definitely work.
+	if it is user defined type, then equals method should be defined in the type
+
+
+
+public class Employee 
+{
+	private Integer id;
+	private String firstName;
+	private String lastName;
+	private Double salary;
+	public Employee() {}
+	public Employee(Integer id, String firstName, String lastName, Double salary) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.salary = salary;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public Double getSalary() {
+		return salary;
+	}
+	public void setSalary(Double salary) {
+		this.salary = salary;
+	}
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", salary=" + salary
+				+ "]";
+	}
+	@Override
+	public int hashCode() {
+		return id;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		Employee arg=(Employee) obj;
+		return this.getId().equals(arg.getId());
+	}	
+}
+
+
+
+		List<Employee> employeeList=new ArrayList<>();
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));		
+		employeeList.add(new Employee(2, "Siva", "Kumar", 84383.0));
+		employeeList.add(new Employee(3, "Rama", "Krishna", 747474.0));
+		employeeList.add(new Employee(4, "Siva", "Raja", 383838.0));
+		employeeList.add(new Employee(5, "Rama", "Nathan", 199111.0));
+		employeeList.add(new Employee(6, "John", "Kennedy", 1024567.0));
+		
+		Employee temp=new Employee(6, "abcd", "efgh", 1234567.0);
+		if(employeeList.contains(temp))
+			System.out.println(" is found");
+		else
+			System.out.println("Not found");
+
+
+NOTICE THE equals method in the Employee class (without which, contains method would not work)
+
+		Employee temp=new Employee(6, "abcd", "efgh", 1234567.0);
+		//remove an element
+		
+		employeeList.remove(temp);
+		
+		for(Employee e:employeeList)
+			System.out.println(e);
+
+
+employeeList.remove(5);
+		
+		for(Employee e:employeeList)
+			System.out.println(e);
+
+
+		List<Integer> marks=new ArrayList<Integer>();
+		marks.add(90);
+		marks.add(100);
+		marks.add(1);
+		marks.add(70);
+		marks.add(50);
+		marks.add(40);
+		marks.add(60);
+		
+//		marks.remove(1);		//1 is index only
+		marks.remove(new Integer(1));	//the object 1 is removed
+		System.out.println(marks);
+
+
+
+
+Different type of set:
+----------------------
+HashSet
+	uses		equals() and hashCode() methods 
+TreeSet	(class) 
+	is an implementation of NavigableSet that extends SortedSet interface	adds elements in such a way the elements are in sorted manner
+LinkedHashSet
+
+
+
+What is a Tree?
+	tree has root 
+	root has branch elements
+	each element can have 
+		left or right or both
+
+			50
+		30		70
+	20		45
+
+this is binary tree. each element can have only left or right sometime both
+
+tree is always sorted. because, it is added based on the value after comparison.
+
+This reminds us the dictionary
+	in dictionary if we need to find a word called "calculator"
+
+	"c" is found in which half?
+		left half or right half?
+	of course
+		left half.		Now right half is never required to be searched
+
+	in left half, bisect into 2, 
+	c is found in which half?
+	in this way, we will narrow down the problem
+
+that is what use in Tree
+	Tree adds elements based on comparing the values. 
+
+If we create a TreeSet of a type, then that type must definitely implement comparable
+
+All the predefined types like
+	String
+	Date
+	Integer
+	Float
+	
+all of them implements Comparable
+
+That is why we are able to add them into TreeSet
+
+But our Employee class does not implement Comparable
+SO we cannot add employee  objects into the treeSet	(because, tree don't know how to compare them)
+
+
+compareTo		vs		equals
+
+equals method returns true or false
+compareTo method returns int		0 is equal		1 if first is bigger		-1 if first is smaller
+
+5-4		=	1		first is bigger than second
+4-5		=	-1		first is smaller than second
+5-5		=	0		both are equal
+
+
+
+sort the result based on state asc, city desc
+
+SELECT * FROM ......	ORDER BY state asc, city desc;
+
+excel
+
+i have list
+
+Tamil Nadu	Chennai
+Tamil Nadu	Erode
+Tamil Nadu	Madurai
+Karnataka	Bengaluru
+
+
+
+fname asc, lname desc
+
+
+Whenever you add elements into TreeSet, the element type should implement COmparable
+
+so that the elements are compared using compareTo method and added to the tree
+
+
+LinkedHashSet
+-------------
+	as like every Set, it will reject duplicates.
+	But this maintains the order in which the elements are added.
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.TreeSet;
+
+public class Main12 {
+
+	public static List<Integer> removeDuplicates(List<Integer> input)
+	{
+		//write your code here
+		LinkedHashSet<Integer> temp=new LinkedHashSet<Integer>(input);
+		List<Integer> result=new ArrayList<>(temp);
+		return result;
+	}
+	
+	public static void main(String[] args) {
+		List<Integer> input=new ArrayList<>();
+		input.add(40);
+		input.add(40);
+		input.add(100);
+		input.add(90);
+		input.add(90);
+		input.add(140);
+		input.add(90);
+		input.add(50);
+		input.add(100);
+		List<Integer> result = removeDuplicates(input);
+		for(Integer i:result)
+			System.out.println(i);
+	}
+
+}
+
+NavigableSet
+SortedSet
+
+
+Iterator
+	hasNext()		true if next element is found
+	next()			returns the element
+	remove()		removes current element
+ListIterator
+	hasNext()		true if next element is found
+	next()			returns the element
+	remove()		removes current element
+	hasPrevious()
+	previous()
+
+List iterators work only for List category of classes. Not for Set at all
+
+Iterator works with List and Set.
+
+
+All of you understood Comparable	(if two objects cannot be compared, then they cannot be added to TreeSet)
+	a.compareTo(b)
+
+	Date dt1, dt2;
+	dt1 has 2 years ago date
+	dt2 has today's date
+
+	dt1.compareTo(dt2)		returns -1		because, small-big is negative
+
+This is possible because, Date already implements Comparable.
+
+What is the need for Comparator?
+	
+
+Task:
+	create a treeset of Integers. The tree should add the elements in descending order.
+	display the elements and see that they are in desc order.
+
+
+
+I cannot modify Integer class. It is not our class.
+So we need an external comparator class that can work on another class like Integer
+
+solution:
+	use Comparator		(instead of Comparable)
+
+
+import java.util.Comparator;
+import java.util.Set;
+import java.util.TreeSet;
+
+//create an external comparator for integer
+class JagComparator implements Comparator<Integer>
+{
+
+	@Override
+	public int compare(Integer o1, Integer o2) {
+//		return o1.compareTo(o2);
+		return o2-o1;
+	}
+	
+}
+
+public class ComparaTorDemo1 {
+
+	public static void main(String[] args) {
+		Set<Integer> marks=new TreeSet<>(new JagComparator());
+		marks.add(100);
+		marks.add(30);
+		marks.add(50);
+		marks.add(45);
+		marks.add(30);
+		marks.add(90);
+		marks.add(50);
+		marks.add(70);
+		marks.add(80);
+		marks.add(60);
+		for(Integer i:marks)
+			System.out.println(i);
+	}
+
+}
+
+
+---------------------------------------------------
+1) use comparable or comparator whenever using TreeSet
+2) use comparable or comparator whenever we use Collections.sort		(in lists)
+
+
+		List<Employee> employeeList=new ArrayList<>();
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));		
+		employeeList.add(new Employee(2, "Siva", "Kumar", 84383.0));
+		employeeList.add(new Employee(3, "Rama", "Krishna", 747474.0));
+		employeeList.add(new Employee(4, "Siva", "Raja", 383838.0));
+		employeeList.add(new Employee(5, "Rama", "Nathan", 199111.0));
+		employeeList.add(new Employee(6, "John", "Kennedy", 1024567.0));
+		
+		Collections.sort(employeeList, new EmployeeComparator());	//will work only if comparable or comparator is used
+		
+		for(Employee e:employeeList)
+			System.out.println(e);
+	
+
+Whenever an interface contains only 1 abstract method, 
+	then that is called as Functional interface
+	ex:
+		Comparator
+		Runnable
+
+Whenever an interface contains 0 abstract method,
+	then that is called as Marker interface
+	ex:
+		Serializable
+
+
+
+Whenever we need to implement a Marker interface, we can use lambda also
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+class StringComparator implements Comparator<String>
+{
+
+	@Override
+	public int compare(String o1, String o2) {
+		// TODO Auto-generated method stub
+		return o1.length()-o2.length();
+	}
+	
+}
+public class StringComparatorDemo {
+
+	public static void main(String[] args) {
+		List<String> countries=new ArrayList<>();
+		countries.add("Ice land");
+		countries.add("India");
+		countries.add("Australia");
+		countries.add("Pakistan");
+		countries.add("Sri lanka");
+		countries.add("Japan");
+		countries.add("Bangladesh");
+		//sort the countries based on their lenght
+//		Collections.sort(countries, (a,b)->b.length()-a.length());
+		Collections.sort(countries, new StringComparator());
+		for(String c:countries)
+			System.out.println(c);
+	}
+
+}
+
+
+
+---------------
+in java, what is Param array?
+
+	public static void display(Integer ...arr)
+	{
+		
+	}
+
+this ... is called as ellipsis
+this refers to a param array	
+	Param array allows you to supply an array as paramter or the values directly as parameter
+
+	above method display can be called as
+
+	display(13,32,33,14,15);
+	int arr[];
+	display(arr);
+
+
+
+List<Integer> marks=Arrays.asList(2,3,4,5,6,7,8);
+		for(Integer x:marks)
+			System.out.println(x);
+
+the above example demonstrates, we can create an array list or any list from an array as easily as seen
+
+
+		List<Integer> marks=Arrays.asList(2,3,4,5,6,7,8);
+		for(Integer x:marks)
+			System.out.println(x);
+		//need to display in reverse order
+		System.out.println("Reverse");
+		Collections.reverse(marks);			//NOTICE this reverse 
+		for(Integer x:marks)
+			System.out.println(x);
+
+---------------------------
+Map
+	is a key value pair
+	there is no add() method in map. Instead there are
+		put()
+		get()
+
+	the put method is used to add an entry into the map
+	the get method is used to get the value based on key
+
+
+
+In a map,
+	the key is a Set
+	that means, key cannot be duplicate. there cannot be 2 keys same
+	if the key is not found, entry is added
+	if the key is already found, the value is updated
+
+		Map<Integer, String> map=new HashMap<Integer, String>();
+		map.put(1, "Rajastan");
+		map.put(2, "Tamil Nadu");
+		map.put(3, "Karnataka");
+		map.put(4, "Utter Pradesh");
+		map.put(5, "Andra Pradesh");
+		map.put(5, "Telangana");
+		for(Entry<Integer, String> e:map.entrySet())
+			System.out.println(e);
+
+		System.out.println(map.get(4));			// 4 is the key. the value is "Utter Pradesh"
+
+What is the difference between 
+	HashMap			the key is HashSet	
+	TreeMap			the key is TreeSet
+	LinkedHashMap		the key is LinkedHashSet
+
+that is the difference
+	so in TreeMap, the keys are in sorted order
+	in LinkedHashMap, the keys are in the order in which they are added
+	in HashMap, the keys are based on "hashCode" and "equals" methods
+
+	The key can also be user defined type
+	why we need user defined type keys?	when we have composite keys.
+
+	always we compare key with primary key. Primary key can be composite. so the map key also can be composite.
+----------------------------------------------------------
+IO
+	Input Output
+
+So far, we have done programs which store data in variables. 
+	variables are volatile	means, they are temporary. As long as the program runs, they may exist. 
+	if we stop the program and run again, the values in the variables are not present
+
+To store data permanently we need Files.
+
+IO streams does not only mean file handling. 
+	
+Java STREAMS can be categorized into 2:
+	byte streams
+	char streams
+
+based on these 2 categories, we can classify the classes in the io package
+	java.io package
+
+further they are classified into 
+	input
+	output
+
+lets see input classes in byte streams:
+	InputStream	(abstract)
+	FileInputStream
+	BufferedInputStream
+	DataInputStream
+	ObjectInputStream
+
+lets see output classes in byte streams:
+	OutputStream	(abstract)
+	FileOutputStream
+	BufferedOutputStream
+	DataOutputStream
+	ObjectOutputStream
+
+all the above classes come under byte stream category:		they see data as bytes
+
+-------------------
+lets see input classes in char category:
+	Reader		(abstract)
+	FileReader
+	BufferedReader
+	
+lets see output classes in char category:
+	Writer		(abstract)
+	FileWriter
+	BufferedWriter
+
+all the above classes come under char category:			they see data as characters
+
+
+123
+	a number
+	3 numbers
+	3 characters
+	1 string
+
+it all based on how we read this data?	based on the way we read the data, it is of different type
+	sometimes, we read as 1 byte.	sometimes as 2 bytes, 	sometimes as 1 bit
+how we access the data is based on which class we use to read or write the data.
+
+difference between
+	memory 		RAM
+	storage		Hard disk
+
+RAM is a temporary memory	volatile to power		power is gone, data is gone
+Hard disk is permanent		even after restart, the data is persistent
+
+Computer cannot do anything unless it stores the information in Memory.  
+Lot of data is in storage. but first it should be loaded in memory in order to write or read
+
+people cannot answer the question (even if it is sum of 2 numbers)
+they cannot remember 2 numbers means, they cannot add those 2 numbers
+
+
+A file is present in storage.
+to be able to write into the file,
+to be able to read from the file,
+	first we need to load the file in memory as an object. Then only we can do read/write
+
+even in c language,
+	FILE f=fopen("c:\rama.txt");	
+
+here, f is in memory. So first load the file as an object in memory. then only we can access the data in the file
+
+in java,
+	File f=new File("d:\raja.txt");			//f is an object representation of the file
+
+
+that is called opening a file.	what do you mean by opening a file.
+	file is loaded in memory as  an object
+
+load		from storage to memory
+store		from memory to storage
+
+
+\n		new line
+\0		null
+\t		tab
+\\		\
+\"		"
+
+display output as follows:
+	We welcome our gest "Amitab"
+
+Task:
+	i) Write a java program that will display all the file names present inside a folder
+	ii) Display only the sub folder names
+	iii) Display only the file name 
+
+
+
+
+
+
+Number of New Words
+
+Miss.Jane, an experienced English professor, gives practice tests to her students to improve their written skills. Everyday students write an article and they submit it to Jane. Jane is particular that the students use only special characters like , ; : . ? ! in the article.
+
+She counts the total number of words used and the number of new words used by the students in the article. Based on the analysis done on the new words used by the students she gives her feedback to the students.  
+
+Jane finds it difficult when the number of students increase. So she wanted to automate the process in the following format. Help her to write a java program to display the new words using lower case and in alphabetical order.
+
+ 
+
+Sample Input and Output - 1
+
+Enter Student's Article
+
+Hello Everybody, welcome to collection in JAVA. Collection, is like a container and powerful concept in Java!
+
+Number of words 17
+
+Number of unique words 14
+
+The words are
+
+1. a
+
+2. and
+
+3. collection
+
+4. concept
+
+5. container
+
+6. everybody
+
+7. hello
+
+8. in
+
+9. is
+
+10. java
+
+11. like
+
+12. powerful
+
+13. to
+
+14. welcome
+
+
+
+Sample Input and Output - 2
+
+Enter Student's Article
+
+hello Hello HEllo hi hi: hi! Welcome,   welcome
+
+Number of words 8
+
+Number of unique words 3
+
+The words are
+
+1. hello
+
+2. hi
+
+3. welcome

@@ -1,0 +1,325 @@
+Demos needed in this session:
+------------------------------
+Data manipulation language
+	manipulation means, the data in the database is getting affected.
+		INSERTing
+		UPDATE
+		DELETE
+
+	all these DML operations are done on the records inside the table.
+
+Manipulation should not be confused with:
+		ALTERing the table (alter means, the structure of the table gets affected)
+
+	similarly,
+		DROPping a table means, removing the table itself from the database. That is
+		not to be confused with DELETE (DELETE means remove only records in the table NOT THE TABLE)
+
+CREATE		to create table
+ALTER		(PENDING)
+DROP		(PENDING)
+TRUNCATE	(PENDING)
+	these are data definition language.
+
+INSERT
+UPDATE
+DELETE
+	These are data manipulation language.
+
+we learnt to insert a row(s) into the table yesterday.
+	a single row
+	multiple rows using ,
+	multiple rows using sub query 	(SELECT)
+
+today,
+we are going to learn UPDATE
+UPDATE?
+	a row or multiple or all rows can be updated using UPDATE statement
+
+	UPDATE TABLENAME SET COLNAME=VALUE, COLNAME=VALUE,....	WHERE CONDITION
+
+	this is the syntax for UPDATE statement in SQL
+	If we did not give WHERE condition, then all the rows present in the table will be updated. (DANGEROUS)
+
+	if we give a condition that none of rows are satisfied, then NO ROWS are updated.
+
+	UPDATE BRANCH SET BCITY='Kolkata' WHERE BID='B00012';
+	UPDATE BRANCH SET BCITY='Vishakapatnam', BNAME='Rani street' WHERE BID='B00014';
+	UPDATE BRANCH SET BCITY='UNKNOWN';			--there is no where condition (all rows will be affected)
+
+
+
+    UPDATE BRANCH SET BCITY=(SELECT BCITY FROM BRANCH WHERE BID='B00006') WHERE BID='B00014';
+
+UPDATE BRANCH SET BCITY='New Delhi' WHERE BCITY='Delhi';
+	the above query is based on non primary key column as condition. so it may affect 0 or more rows
+
+delete:
+--------
+	we can remove row(s) from the table using 
+	DELETE statement
+	
+	if we did not give any condition, then all the rows in the table will be deleted.
+	DELETE SHOULD NOT BE CONFUSED WITH DROP TABLE STATEMENT
+
+	
+
+	DELETE FROM CUSTOMER_COPY WHERE CUSTID='C00010';	
+		this is delete using primary key columne. since primary key has unique values, a delete using primary key will delete 0 or 1 records
+		
+	DELETE FROM CUSTOMER_COPY WHERE city='Delhi';
+		here, the condition is using non key column. So, the delete operation may delete 0 or more records
+
+	DELETE FROM CUSTOMER_COPY WHERE 1=2;
+		HERE, the condition is false, so no records are deleted
+
+	DELETE FROM CUSTOMER_COPY;
+		HERE, no condition, hence all rows in the table are deleted
+
+insert into customer_copy
+select * from customer;		//i have added all the 10 records from customer table to customer_copy
+
+
+TRUNCATE customer_copy;		//TRUNCATE always remove all records from the table. WE CANNOT SPECIFY A CONDITION for TRUNCATE. so there is no choice to remove selective records using TRUNCATE.
+	In fact, TRUNCATE is a DDL (Data Definition Language) So it drops the table and creates again (so fast when compared to DELETE statement)
+
+TRUNCATE CANNOT BE ROLLED BACK	(Because, TRUNCATE is DDL. a ddl statement can never be rolled back)
+
+so, please do research on difference between DELETE and TRUNCATE
+
+We have completed Data Manipulation Language
+---------------------------------------------------------------------------------------------------------------
+
+==============================================================
+SELECT statement
+--------------------
+	i) WHERE condition
+	ii) ORDER BY
+	iii) GROUP BY
+	iv) HAVING
+	v) SUB QUERY
+	vi) JOINS
+
+What is the purpose of SELECT statement?
+	SELECT statement is used to retrieve data from the database
+	a select statement can be used to retrieve
+		all or few columns
+		from one or more tables
+		based on condition(s)
+		in asc or desc order based on column(s)
+		
+in addition to that,
+	we can do aggregation	ie., SUM, COUNT, MIN, MAX, AVG
+	etc
+we can use functions to derive values from columns
+
+	for example:
+		when you create a project, the tables in the database can have attributes.
+
+	"age" is not a good choice of attribute. Rather, "dateOfBirth" can be an attribute.
+	age can be derived from the date of birth attribute. so it is derived attribute
+
+similary "firstName", "lastName" are attributes, 
+	full name can be derived from the attributes.
+
+hence, in select query, we may retrieve data as it is found in the table or sometimes, we may derive data using formula or functions.
+
+Whatever we do, the SELECT query do not affect the data in the table. It is a read only statement.
+
+
+	yesterday, we learnt to create sql query that can retrieve all columns or specific columns from the table with or without condition.
+
+	SELECT * FROM Branch;		// * for all columns. "no where condition" and hence all rows
+	SELECT * FROM Branch WHERE BID='B00001';	// only one row is selected because, BID is primary key
+	SELECT * FROM Branch WHERE BCITY='New Delhi;	//0 or more rows are selected because, BCITY is a non key attribute
+	
+WHILE USING WHERE CONDITIONS, We can use various operators
+
+select * from trandetails
+where transaction_amount>2000;		//here, > operator is used
+
+Identify various operators used in SQL language:		(acitivity)
+	comparison		> 		<		>=		!=		
+	logical operators	AND		OR		NOT
+	arithmetic operators	+		-		/	*	MOD
+		These operators are useful in DML
+	
+select * from trandetails
+where transaction_amount>2000
+and transaction_type='Deposit';
+	in this statement, i am using multiple conditions separated by "AND" 	
+	similarly, u can use "OR" operator also. 
+
+II) ORDER BY
+	is used to sort the result in asc or desc order.	Order by does not affect the data in the table. It is only used to display the result in order. original data in the table will not be re arranged at all.
+
+select * from trandetails
+where transaction_amount>2000
+and transaction_type='Deposit'
+order by transaction_amount;
+
+by default, the order is ascending order.
+
+select * from trandetails
+where transaction_amount>2000
+and transaction_type='Deposit'
+order by transaction_amount asc;
+
+no need to mention asc.
+
+select * from trandetails
+where transaction_amount>2000
+and transaction_type='Deposit'
+order by transaction_amount desc;		//this is descending order
+
+select * from trandetails
+where transaction_amount>2000
+and transaction_type='Deposit'
+order by transaction_amount desc, tnumber desc;		//sort based on more than one column.
+	if first order by columns values are same, then they are further sorted by second column
+
+
+ORDER BY clause should be mentioned only at the end of the SELECT statement.
+
+
+IV) GROUP BY
+
+select SUM(transaction_amount) from trandetails;
+	SUM is an aggregate function. what is an aggregate function? a function that produces one result per group.
+	COUNT, MIN, MAX, AVG, SUM are the aggregate functions. They produce one result per group.
+
+	select SUM(transaction_amount) from trandetails
+		this query produces a result 52000
+
+	what is this 52000?		This is the sum of all the transaction amounts in the trandetails table
+
+
+what is group by?
+	An aggregate function produces only 1 result per table.
+	If we need 1 result per group, use GROUP BY
+
+	that means, there is no need for group by if there is no aggregate funciton. Exactly. Whenever, a group by is found, there needs an aggregate function.
+	But unfortunately some people use group by for getting distinct values, which is not good practice.
+	
+
+SELECT DISTINCT OCCUPATION FROM CUSTOMER;	
+	There are only 3 distinct occupation found
+
+SELECT OCCUPATION FROM CUSTOMER
+group by occupation;
+	this also produce same result. but this is considered as poor programming. the purpose of group by is for getting one aggregate value per group. not to be used for distinct purpose.
+
+
+SELECT acnumber, sum(transaction_amount) 
+from trandetails
+-- where sum(transaction_amount)>20000
+group by acnumber
+having sum(transaction_amount)<20000;
+
+Difference between WHERE and HAVING
+	WHERE is used to restrict records.		if where is not there, all records are selected
+	HAVING is used to restrict groups. 		not all the groups, only groups qualifying the condition in having. Having allows aggregate functions in the condition
+
+
+COUNT
+	counts only not null values. If there are some rows having null in the column, null is not counted
+
+
+IN SELECT query
+	WHERE
+	ORDER BY
+	GROUP BY
+
+What is the difference between order by and group by
+	order by is used to sort the result based on column(s) in asc or desc order
+	group by is used to produce one result per group
+
+
+
+--------------------------
+1) JOINS
+2) Sub queries
+
+First, we learn joins
+i) inner joins
+ii) left outer join
+iii) right outer join
+iv) full outer join
+v) self join
+vi) cross join
+vii) theta join
+
+First of all, what is the need for joins?
+	when we need to retrieve data from more than one table, we need to use joins
+
+
+suppose, we need to display 
+	acnumber
+	custid
+	fname
+
+here, fname is present in customer table
+	acnumber and custid are present in account table
+
+to display acnumber and custid, there is no issue.
+SELECT acnumber, custid FROM account
+
+
+select acnumber, account.custid, fname 
+from account, customer
+where account.custid=customer.custid;
+
+in the same above query, i replace the table names into alias names 	(customer=c	account=a)
+
+select acnumber, a.custid, fname 
+from account a, customer c
+where a.custid=c.custid;
+
+
+
+if we use , for retrieving data from multiple tables, this is called as THETA join
+
+select acnumber, a.custid, fname 
+from account a, customer c
+where a.custid=c.custid;
+
+The above query does not display CUSTOMER IDS		5, 8,9,10
+Because, they have no accounts
+
+in accounts table and customer table whichever records are found, they are displayed.
+
+THIS IS CALLED AS INNER JOIN.
+Inner join produces records, only when there is matching record in the joined table.
+Here, account table joined with customer table. 
+customerid is the join condition.
+only if there are matching records in both table, (custid) then only the records are displayed. 
+
+In mysql, only INNER joins can be performed using theta join syntax.
+So introducing JOIN syntax 
+	select acnumber, a.custid, fname 
+		from account a, customer c
+		where a.custid=c.custid;
+
+the above query is translated into new JOIN syntaX:
+	select acnumber, a.custid, fname
+		from account a join customer c
+		on a.custid=c.custid;
+
+A JOIN is normally INNER JOIN ONLY
+Unless, we mention that it is outer join, then it is INNER join by default.
+
+	select acnumber, c.custid, fname
+		from account a right outer join customer c
+		on a.custid=c.custid;
+
+the above query displays all the records from right side table (customer) and matching records from account table. If there is no matching records in account table, then null is displayed
+
+This is called as right outer join
+-----------------
+	select acnumber, c.custid, fname
+		from customer c left outer join account a
+		on a.custid=c.custid;
+
+the above query is an example for left outer join. Here, all records from left side table is displayed, matching records from right side table is displayed. when there is no matching, null is displayed.
+
+------------

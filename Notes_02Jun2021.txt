@@ -1,0 +1,52 @@
+Maven
+	in command line
+
+mvn -Dabcd	-Defgh	-Dsomething
+mvn clean install			this will build the application compile, check for errors
+
+
+i deleted this mvn when i use 
+	right click project
+		run as
+			maven build
+				goals
+
+mv goals
+
+
+we do projects in our computer	(source computer)
+
+upload the project to server	(target computer)
+
+
+in server, we can build the application
+
+	we change something in some of the files after upload
+	we dont have eclipse in server
+	so how we compile the changes done?
+
+in cmd prompt
+
+1) create a maven project in cmd prompt itself?
+
+what are the details we need to tell in that command?
+i need to specify 
+	the project name
+	the arche type
+	group id
+	artifact id
+	package name
+
+to create a simple maven project:-
+
+mvn archetype:generate -DgroupId=com.companyname.projectname  -DartifactId=simple-maven-project  -Dpackage=com.companyname.projectname  -Dversion=1.0-SNAPSHOT
+
+
+
+mvn archetype:generate -DgroupId=com.cts.hospital  -DartifactId=simple-maven-project  -Dpackage=com.cts.hospital  -Dversion=1.0-SNAPSHOT
+
+
+
+mvn pmd:pmd
+
+	PMD stands for Program Mistake Detector

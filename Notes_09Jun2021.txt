@@ -1,0 +1,40 @@
+1) spring boot mvc form validation
+
+	form validation
+	---------------
+		entered data should comply with some rule
+		ex:	
+			email id should have @ . characters etc
+			password should be atleast 6 characters 
+			age >=18
+
+		form validation is data entry validation
+			NOT checking if password is correct according to the database	that's not validation
+
+		
+how to implement form validation in spring mvc project?
+	yesterday, we used taglib		"form"
+		<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+
+this form tag library provides support for validation
+
+	in yesterdays project lets introduce some validation rule
+
+	1) Branch Id should be atleast 6 characters
+for form validation
+	i) add dependency in pom.xml
+
+	ii) use annotations in entity class that defines the validation rule
+	public class Branch {
+		@Size(min = 6, max = 6, message = "Branch ID should be exactly 6 characters")
+		private String bid;
+		private String bname;
+		private String bcity;
+
+	iii) this is not client side validation. This validation is done by the controller only
+		so in the controller method, 	we need to enforce validation using
+		@Valid
+
+		and check if there are any failures using BindingResult
+

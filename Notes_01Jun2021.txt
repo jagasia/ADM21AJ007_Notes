@@ -1,0 +1,152 @@
+JUnit
+	test cases
+		each method in java is considered as an unit
+
+		each method can be tested with multiple possible test cases
+		2, 3, 5			if we add 2 and 3, we get 5
+
+		testValidateSumMethodForTwoAndThree()
+
+
+	Test suite is a collection of test cases	(definition)
+	in junit
+
+	Test Suite is a collection of test classes
+	
+Challenge:
+	a tester wants to test the method (ex: 		fundsTransfer())
+		for the testing purpose, he cannot make a real transaction
+
+	What we do?
+		we create Mocks
+
+
+BankDao		interface
+
+BankDaoImpl	class		that implements the BankDao interface
+
+we do not test the BankDaoImpl class
+
+rather,
+we create a mock for BankDao interface
+
+In mock,
+	when this method is called, it should return this
+
+	
+
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>2.0.2-beta</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.2</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+
+
+
+interface Maths
+{
+	int sum(int i, int j);
+}
+
+class Example
+{
+	Maths maths;
+	public int compute(int x, int y)
+	{
+		result=maths.sum(x,y);
+		return result;
+	}
+}
+
+class ExampleTest
+{
+	@Test
+	public void testSum1()
+	{
+		Maths maths=mock(Maths.class);
+	//	when(doService.getTodos("dummy")).thenReturn(combinedlist); 
+		when(maths.sum(2,3)).thenReturn(5);
+		Example ex=new Example();
+		int result=ex.compute(2,3);
+		assertEquals(5,result);
+	}
+}
+
+
+
+-----------------------------
+SONAR QUBE	CODE ANALYSIS
+------------
+1) download sonarqube from
+	https://www.sonarqube.org/
+2) unzip to a known folder (softwares folder)
+
+Another important thing:
+	sonarqube works only for Java 11 or above
+we were using java 8. 
+	So download java (jdk) 11 also and install it (better uninstall jdk 1.8)
+	after installing java 11
+		set environment variables(to the jdk bin folder)
+			JAVA_HOME
+			Path	(append the java jdk bin folder to path variable)
+
+	
+1) we need to start sonar server.
+	sonar home folder \ bin	\	windows folder\
+		StartSonar.bat
+2) we need to login to 
+	localhost:9000
+
+	it will ask username and password
+		username:		admin
+		password:		admin
+
+--------------------------------------------------------------
+
+Let us create a maven project or open an existing maven project and analyse the code quality using sonarqube
+
+we need to add some plugins to our pom.xml
+
+
+<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.7.0.1746</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.1</version>
+			</plugin>
+
+		</plugins>
+	</build>
+
+these plugins are added to the pom.xml now.
+
+1) right click project 
+	run as
+		maven build
+	goals:
+		clean org.jacoco:jacoco-maven-plugin:prepare-agent install
+
+
+2) in sonarqube portal 	(localhost:9000)
+	create a project and generate the token 	(choose maven and copy the goals, make it single line remove \)
+	build the project with the goals
+
+3) Now you can see the project in sonarqube

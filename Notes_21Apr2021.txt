@@ -1,0 +1,205 @@
+insert
+update
+delete
+
+
+these commands are required for TekStac hands on
+
+tHESE commands come under the category
+	DATA MANIPULATION LANGUAGE	(DML)
+
+1) INSERT
+----------
+	Insert statement is used to add row(s) into the table
+2) UPDATE
+----------
+	Update statement is used to update the existing record(s) in the table
+3) DELETE
+----------
+	Delete statement is used to delete the existing record(s) in the table
+
+DROP is used to remove a TABLE in the database (totally different from DELETE)
+
+----------------------------------------------------
+INSERT:
+-------
+	Syntax of INSERT
+
+	INSERT INTO <<TABLENAME>> (<<COL LIST>>) VALUES (<<VALUE LIST>>);
+
+Ex:
+	INSERT INTO ASSOCIATE (ASSOCIATEID, COHORTCODE, FIRSTNAME, LASTNAME, MOBILENO) VALUE (123456, 'AJ007', 'RAMESH', 'KUMAR', '9898989898');
+
+
+
+select * from associate;
+
+specify only the required columns whose values are provided
+INSERT INTO ASSOCIATE (ASSOCIATEID, FIRSTNAME) VALUES (123457,'Siva');
+
+provide columns in different order
+INSERT INTO ASSOCIATE (FIRSTNAME,ASSOCIATEID) VALUES ('Kumar',123458);
+
+INSERT INTO ASSOCIATE VALUES ();		//NOTICE THAT COLUMN LIST IS NOT PROVIDED
+	In this case, we are supposed to provide all the values in the correct order.
+	suppose, there are 5 columns in the table, we are supposed to provide 5 values in the correct order as in the table
+
+INSERT INTO ASSOCIATE VALUES (123459, 'AJ007', 'SURESH', 'KUMAR', '9797979797');
+
+Sometimes, we do not want to give values for few columns
+
+INSERT INTO ASSOCIATE VALUES (123460, 'AJ007', 'Prakash', 'KUMAR', null);
+
+we can provide 
+	NULL		(no value is provided)
+	DEFAULT		(some columns might be defined with DEFAULT values, we mention DEFAULT)
+	in those places
+
+ex:
+	country is a column. for which default value is 'India'. it is defined in the create table statement
+
+
+when the data type is simple character / number it is easy.
+
+but if the data type is date?
+	what is the format for date?
+		yyyy-MM-dd			this is the format in which we have to give the date value
+	note that MM is capital. mm is minutes
+
+INSERT INTO trandetails VALUES('T00013','A00002','2021-04-21','Cheque','Deposit',1000);
+
+
+
+
+so far, we have seen insert statements that add only 1 row into the table
+
+we can also use this insert statement to add multiple rows into the table
+
+INSERT INTO associate VALUES 
+(123461,'AJ007','Jagadees','waran','919329393'),
+(123462,'AJ007','Raja','sivakumar','939393933');
+
+
+CREATE TABLE `associate_copy` (
+  `ASSOCIATEID` int(11) DEFAULT NULL,
+  `COHORTCODE` char(10) DEFAULT NULL,
+  `FIRSTNAME` varchar(50) DEFAULT NULL,
+  `LASTNAME` varchar(50) DEFAULT NULL,
+  `MOBILENO` char(10) DEFAULT NULL
+);
+
+
+INSERT INTO ASSOCIATE_COPY 
+SELECT * FROM ASSOCIATE;
+
+	THE Above insert statement adds all records produced by the SELECT query into a table. (multi row insert)
+
+1) REGULAR INSERT STATEMENT
+	ALL COLUMNS IN CORRECT ORDER
+2) SPECIFY SOME COLUMNS AND ADD A ROW
+3) MULTI ROW INSERT STATEMENT 
+		INSERT INTO associate VALUES 
+		(123461,'AJ007','Jagadees','waran','919329393'),
+		(123462,'AJ007','Raja','sivakumar','939393933');
+4) MULTI ROW INSERT STATEMENT
+		INSERT INTO ASSOCIATE_COPY 
+		SELECT * FROM ASSOCIATE;
+
+
+
+
+-----------------------------------
+WHAT IS THE PURPOSE OF "SELECT" Statement
+	when we want to retrieve data from the table(s)
+
+	SELECT * FROM ASSOCIATE;
+		this query retrieves all columns (* means all columns) from the associate table.
+		how many rows? all rows? yes all rows, because, there is no condition provided
+
+	SELECT * FROM <<TABLENAME>>		
+
+
+IN PROBLEM #2, THEY DO NOT WANT TO SEE ALL COLUMNS OF DEPARTMENT. They want to see only the department_name 
+
+	so instead of * we have to use column name(s)
+
+In Problem #2, they do not want to see all rows, they want to see only the deparment name where block no is something
+	so we have to use condition.
+	"WHERE" is used to give condition
+
+select associateid, firstname, lastname 
+from associate 
+where firstname='Siva';
+
+
+where clause is used to do "selection"
+column list is used to do "projection"
+
+
+
+
+we have to write SELECT queries using JOINS
+-------------------------------------------
+1 or 2 problems are based on UPDATE and DELETE
+
+update statement is used to update the existing records (rows)
+	
+	UPDATE ASSOCIATE SET COHORTCODE='AJ007' WHERE ASSOCIATEID=123457;
+
+	If i do not give condition (WHERE)
+		THEN ALL THE ROWS WILL BE UPDATED WITH COHORTCODE 'AJ007'
+
+whenever you do 
+	UPDATE
+	DELETE
+remember to check the condition we use in where clause.
+
+the condition is based on a primary key column, means, only 1 row will be updated.
+because, primary key column values are unique. it is more preferrable to give condition based on primary key,
+
+but in tekstac, they will give the condition (indirectly) using instructions
+
+so you have to use the problem description to find the condition to be used
+
+
+
+UPDATE ASSOCIATE SET LAstname='waran' WHERE ASSOCIATEID=123458 OR ASSOCIATEID=123457;
+
+update associate set lastname='waran' where associateid in (123456, 123459)
+
+
+in above queries i have used operators like
+	OR
+	IN
+	BETWEEN
+	NOT IN
+	NOT BETWEEN
+	AND
+	
+
+
+=====================
+SELECT query:
+--------------
+	SELECT COLUMNLIST 
+	FROM TABLENAME(S)
+	ORDER BY
+	GROUP BY
+	HAVING
+	
+
+sub queries
+and 
+joins
+
+
+
+coalesce()
+	is a function that can accept any number of arguments
+	the first not null arg is returned
+
+	coalesce(aadhar, pan, passport, voter, license)
+		the first not null arg found, is returned by the function. if everything is null, null is returned
+
+
+------------Javascript doubts---------------

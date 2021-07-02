@@ -1,0 +1,39 @@
+before doing your 1st hands on in tekstac
+1) setter based injection
+2) constructor based injection
+3) autowiring
+4) annotation configuration
+
+
+in tekstac,
+	maven project is already created. with pom.xml already configured. 
+	"bean.xml" is named as "applicationContext.xml"
+	AND THE NAMESPACES are already there. 
+		we just need to configure the beans
+
+
+in our yesterday's project,
+	we use dependency injection
+		Department	has List<EMployees>
+		that was "setter" based injection
+
+	how spring IOC container, created our bean instances?
+		it created using "no" arg constructor.	(HTATS y when you did not have a no arg cons, you got error)
+
+		it created an object using no arg cons.
+		and then used setter methods to inject the properties
+
+Now, lets see
+		"constructor" based injection
+
+
+
+Autowiring
+	using xml configuration			(byName		byType)
+	using annotation
+		Qualifier annotation to specify the choice of implementation
+
+			@Autowired
+			@Qualifier("sony")
+			private Audio audio;
+

@@ -1,0 +1,102 @@
+Spring AOP
+	Aspect Oriented Programming
+		provides solutions for cross cutting concerns
+
+	example:
+		suppose, you are creating a program that is going to calculate or something.
+		what you focus is only that algorithm in that method
+		the method may do lot of calculations.
+
+		what you do not focus, is the login validation before calling this method.
+		or printing the receipt after this method.
+
+
+		Before and After this method execution, there may be something required to be done.
+
+		UML, we call is as
+			pre conditions
+			post conditions
+
+		example:		ATM
+			we write a method called "withdrawMoney"
+
+			before this method, check pin number, check if account has funds. check if atm has money
+			after this method, print receipt. show balance, dispense cash, etc
+
+
+Cross cutting concerns can be:
+		logging			(making entries into a text file/system out to report what is happening)
+		transaction management	(begin tran, end tran)
+		security		(loggin in, logging out)
+		
+Business method:
+		withdraw		(I can create 2 advices here)
+		deposit
+		check balance
+
+as a spring developer, we want to separate the cross cutting concerns from the business methods				
+
+
+AOP
+	Provides separation of role between the programmer who is developing the business methods and who take care of cross cutting concerns.
+
+	advantage is we can easily configure the ccc in the xml or annotation config
+
+
+terms used in AOP:
+	Advice		(methods which are executed by the aspects)
+			before advice		
+			after advice
+					
+	Pointcut expression		(*.*)
+			how we configure that which advice should execute before/after which business method
+			point cut expression determines this
+
+	Join point
+			point in which an aspect joins a business method
+
+Steps:
+	in our examples what we are going to do?
+1) we create beans
+	bean.xml	
+		we define beans (classes)
+
+	also we are going to define the aspects
+		define pointcut expression and map the advice methods to the join point
+
+2) we will call only the business method
+		before 
+		after
+			methods will be called automatically
+
+3) pom.xml
+		context
+		context-support
+		aop	
+		aspectJ	rt
+		aspectJ weaver
+
+	these are the dependencies that are required to implement AOP in our project
+
+ex:
+	lets implement aop using xml configuration
+
+in tekstac programs,
+	there was always a package/folder
+
+		src/main/java
+		src/main/resources
+
+	in quickstart archetype, there is no resources folder
+	so what i suggest is to skip arche type selection, you will get resources folder also
+
+
+---------------------------------------------
+Spring JDBC
+------------
+	how we configure a connection in Spring jdbc?
+	we configure in xml file
+		DriverManagerDataSource
+		JdbcTemplate
+
+		these 2 are already defined in the spring jdbc dependency

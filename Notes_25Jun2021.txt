@@ -1,0 +1,180 @@
+welcome to stage 3
+
+	Spring REST
+	Git
+	JQuery
+	BootStrap
+	Angular
+	Microservices
+	Cloud
+	Splunk
+
+------------------
+Spring REST
+	REpresentational State Transfer
+
+1999
+	Microsoft presented a paper called XML at W3C	
+	World Wide Consortium is responsible for web standards
+
+	standards allow applications to interact with each other
+
+	XML language
+		that allows data to be shared among heterogenous applications
+
+	this gave birth to Service Oriented Architecture in 
+2001
+	web services were introduced
+
+	what are web services?
+		a code that can be called from internet
+
+	Mobile Number:___________
+	Message:_____________
+		send sms
+
+
+	google
+		sms web service
+
+		URL		
+
+
+	a servlet can call webservice using the url
+
+	
+1) web service can be created in any language 		c#
+2) can be accessed from any language			java
+
+
+	xml wAS used as data interchange format
+
+that webservice that used XML as a standard for interchanging information was called as
+	SOAP web service
+
+		Simple Object Access Protocol
+
+but entire webservice is been shared with the clients
+
+SOAP provides documentation of all methods available in web service
+	is called as WSDL	Web Services Description Language
+	is an XML file that contains list of methods and parameters, return types etc
+
+	
+then came
+	RESTful web services
+
+	REST is not a protocol
+	is architecture
+
+Jersey		simple f/w for REST api
+Spring		robost api for REST
+
+in REST
+	we provide URL for every method			(in soap, 1 URL for all the methods together)
+
+	microservices are created using REST
+
+RESTful web services are called as REST API
+
+	HTTP methods
+		GET		usually read information from REST api
+		POST		usually used to add new entity
+		PUT		usually update the existing entity
+		DELETE		usually delete the existing entity
+		PATCH		usually updates few of the attributes rather than all
+
+
+	url may not end with /			(considered as poor practise)
+	same URL can be used for multiple methods, but different HTTP method
+	
+	some common path can be used for controller and sub paths for some methods
+
+[{"bid":"B00001", "bname":"New branch", "bcity","New Delhi"}]
+
+
+	GET	https://jsonplaceholder.typicode.com/todos
+			all user todos are displayed as JSON
+	GET	https://jsonplaceholder.typicode.com/todos/1
+			get only 1 user todo
+	POST	https://jsonplaceholder.typicode.com/todos
+	PUT	https://jsonplaceholder.typicode.com/todos
+	DELETE	https://jsonplaceholder.typicode.com/todos
+
+
+			
+in browser, address bar, we type an url means, we are using GET only
+POST
+PUT
+DELETE
+PATCH
+
+	cannot be used from address bar of browser
+
+we use post man to test other mappings of a rest api
+
+jar is used because, i see a spring boot app as a java project (with main method) configured to start app server at run time. we are not deploying the project in tomcat server by ourselves. it is done by spring boot application
+
+war is used when we create MVC project that contains JSP files.		JSP files will not work in jar file
+
+REST API has
+	model
+	controller
+
+	but not View. If view is also there, it is MVC project. 
+	In MVC Project, we use @Controller
+	In REST API, we use @RestController
+
+first program in spring rest 
+
+1) create a spring boot project from start.spring.io
+	jar
+	8
+	dependencies
+		devTools		automatically refresh 
+		spring web		apache tomcat
+		
+2) if you create packages inside the base package then we do not require to configure our application
+
+
+
+====================
+1) create spring boot app
+	start.spring.io
+
+	jar
+	java version
+	choice 
+		group id			package name
+		artifact id
+
+2) dependencies
+	spring web
+	devtools
+
+3) go to application.java
+
+	if your project name is project1
+
+	then
+			Project1Application.java
+	hello world 
+
+4) a rest controller
+	@RestController
+		getmapping
+			return hello world message
+5) check in browser
+
+
+
+
+----------------------------------
+1) create a rest api			(spring boot project with a rest controller)
+
+2) allow user to 
+	GET all branches
+	GET a branch by bid
+
+
+

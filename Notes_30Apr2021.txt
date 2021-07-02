@@ -1,0 +1,393 @@
+0) Create a class Shape
+	name, color, backgroundColor
+1) Create a class Circle inherits Shape
+	radius
+2) Create a class Triangle inherits Shape
+	type, breadth, height
+3) Create a class Square inherits Shape
+	sideLength
+
+
+all of you understand why we need a class called Shape
+then you understood why we need inheritance.
+
+
+you understood inheritance but facing difficulty in coding
+
+
+class Shape
+{
+
+}
+
+
+
+class Circle extends Shape
+{
+
+}
+
+
+
+1) super class should be very general	
+
+Shape is very general term.	 we cannot visualize it	
+
+Vehicle is an abstract term
+
+vehicle is not very clear. It is generalized term
+
+super classes are generalized
+sub classes become specific
+
+
+Vehicle	(super)
+Car	(sub class)
+Suv	(sub class)
+CompactSuv	(sub class)
+
+
+
+Employee
+ContractEmployee
+
+Furniture			super class should be general
+Chair				sub class it should be specific
+OfficeChair			more specific
+
+
+
+Shape				is super class (abstract)
+Circle, Triangle, Square	all are sub classes for Shape class
+
+
+
+the super classes can be declared as abstract also.
+
+
+
+i) class should not contain public variables.
+	why? if we make it public, it allows unconditional access to the users.
+	public int age;
+
+
+	people may enter age as
+		age=-10;
+
+	how to prevent from entering invalid data.
+	allow users to access variables using functions (methods)
+
+
+public class Shape {
+	private String name;		//property
+	private String color;
+	private String backgroundColor;
+	
+	public void setName(String n)
+	{
+		//here, we can write if condition, switch case or any validations and 
+		//check if the value supplied in "n" is allowed or not. reject or accept
+		name=n;
+	}
+}
+
+
+Shape s=new Shape();
+s.setName("Circle");
+	//this is the approach we are supposed to do while setting value to the properties of an object 
+
+
+Property:
+	property is nothing but a non public data member of a class. That has setter/ getter/ both
+
+setter method means??
+	if variable is name, then setter is setName
+	if variable is color, then setter is setColor
+	if variable is backgroundColor, the setter is setBackgroundColor
+
+
+
+public class Shape {
+	private String name;
+	private String color;
+	private String backgroundColor;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
+	public String getBackgroundColor() {
+		return backgroundColor;
+	}
+	public void setBackgroundColor(String backgroundColor) {
+		this.backgroundColor = backgroundColor;
+	}	
+}
+
+
+Student rama=new Student();
+
+Guideliness for creating any class:
+1) class name should be Noun
+2) class name should start with capital letter
+3) class should not contain public variables
+4) variables can non public
+	private or protected or default (no access specifier)
+5) public getters and setters (both are not compulsory)
+	if a variable has only getter method (no setter)	then it is read only property
+	if a variable has only setter method (no getter)	then it is write only property
+	if a variable has no getter or setter?			then it is not a property at all
+6) a class must have a no arg constructor if there is any arg cons
+7) if required, create a toString method also
+
+
+when we do not define any constructors in a class, a default constructor is created by the compiler
+
+
+Whenever we define an arg cons, we should also define a 	no arg cons
+
+
+when we do dynamic polymorphism.		Late binding
+
+Employee ramesh;
+ramesh=new Programmer();		//what he was doing is something
+ramesh=new Designer();			//what he do has changed
+ramesh=new ProjectManager();		//what he do has changed
+ramesh=new HR()
+
+
+Shape s;
+s=new Circle();			//this is called as dynamic polymorphism
+s=new Triangle();		//dynamic polymorphism
+
+poly	many
+morph	face
+
+difference behavior
+
+sum(2,3);		//answer		5
+sum("Rama","Krishna")	//answer		RamaKrishan
+
+23
+
+Here, sum() is a function that behaves differently based on different type of parameters
+Polymorphism:
+	sum() has 2 overloaded version of methods
+	sum(int,int)
+	sum(String,String)
+
+	this is called as method overloading in java		(in c++, it is called as function overloading)
+
+	in C language, we cannot define 2 methods with same name
+
+rules for method overloading
+1) method names are same
+2) but the signature should be different
+	what is signature?
+		i) number of arguments can be different			sum(i,j)		sum(i,j,k)
+		ii) order of the type of arguments can be differnet	sum(int, float)		sum(float, int)
+		iii) type of the arguments can be different		sum(int, int)		sum(float,float)
+
+	any of the above 3 difference is ok. 
+
+		iv) only difference in return type is not allowed. 	return type can be same or different
+
+
+Consider the below scenario:
+
+	int sum(int i, int j)
+
+	float sum(int i, int j)			//not allowed
+
+if i call sum as			sum(2,3)		which of the above will be called? confusion. 
+so it is not allowed.
+
+
+
+
+class Person
+{
+}
+
+class Teacher extends Person
+{
+}
+
+class Student extends Person
+{
+}
+
+Person rama;
+rama=new Teacher();
+rama=new Student();
+
+1) static polymorphism:
+	multiple behavior found in the class	(compilation)
+	ex:	overloading
+2) dynamic polymorphism:
+	multiple behavior found during runtime (main method)
+	ex:	late binding			Super class type=new Sub class type
+
+
+
+
+1) super class constructor is called by sub class constructor using
+	super()
+
+2) this super() must be called in the first line of the constructor only
+
+
+
+Furniture		name, color
+Chair			noOfLegs
+Bookshelf		noOfShelves
+
+1) all variables as private
+2) constructor without argument
+3) constructor with all argument
+4) getters and setters in each class
+5) acceptDetails and displayDetails
+
+
+
+Employee ramesh=new Employee();			//some people might not have submitted all proofs or certificates
+so it is better to create object using no arg constructor. then later whenever they submit every document, we can use setter methods to update them
+
+
+
+no arg constructor is compulsory in frameworks like hibernate, spring
+it will not work without no arg constructor.
+
+all arg cons is a convenient way to create an object with all values in single line
+
+
+
+
+Shape	
+Furniture
+
+
+in both examples, 
+	we understand that
+
+Shape is only for reusability
+Furniture is only for reusability
+
+in OLX website
+
+you can sign up as a user
+
+class User
+
+if you want to sell a product
+
+class Seller extends User
+
+
+if you want to buy a product
+
+class Buyer extends User
+
+in both scenarios, we login using the same user id and password
+
+but in one transaction, you can be a Buyer	(or)	you can be a Seller
+
+you CANNOT be an User only
+
+WE SHOULD NOT ALLOW THE USERS TO CREATE AN OBJECT OF
+	User
+	Shape
+	Furniture
+
+it is not valid in any transaction 
+
+these classes are meant only for inheritance. we should not allow users to create object of these classes
+	User
+	Shape
+	Furniture
+
+
+
+so declare these classes as Abstract
+
+public abstract class Shape		//only for resuablity only for declaring common things among sub classes
+{
+}
+
+
+
+why Shape class is declared as "abstract"
+
+1) we cannot create an object for abstract class
+2) it is meant for inheritance only
+
+
+
+Shape s;		//this is allowed. because, s is not an object. (only if you use "new" it will create object)
+
+s=new Triangle();
+s=new Circle();			
+
+	ref var of super class can be assigned with the object of any of its sub classes
+
+but a peculiar behavior we are going to find now
+
+when "s" is declared as a Shape, only the methods defined in the "Shape" class are available. but the implementation or behaviour will be of sub class. 
+
+suppose,
+
+i have defined only
+	acceptDetails()	
+	displayDetails()
+
+	in the Shape class
+
+if sub class has additional methods, they are not available in the object declared as Shape
+
+1) If there are abstract methods in the super class, then the super class must be declared abstract
+2) if there are abstract methods in the super class, the the sub classes must override all those abstract methods
+
+Why it is compulsory to override the abstract methods?
+	by inheritance, the sub class gets a copy of all accessible methods
+
+Problem:
+	super class has abstract method.
+
+a sub class also gets a copy of abstract method. So only abstract classes can contain abstract methods.
+The sub class may be declared as abstract. so that the problem is solved.
+or
+The sub class overrides the abstract method. so that the problem is solved.
+
+Rules of overriding:
+1) the sub class method and the super class methods are of same name
+2) the sub class method and the super class method are of same signature	(no of arg, type, order of args)
+3) the return type also should be same	
+4) the sub class method cannot be less accessible
+	if super class method is public, then sub class method also should be public
+	if super class method is protected, then sub class method can be protected or public
+	if super class method is default, then sub class method can be default, protected or public
+	if super class method is private, then we cannot override that in the sub class
+
+	public > protected > default > private
+5) the sub class method cannot throw new exceptions (that are not thrown in super class)
+	super class method is declared with any exception, then only those are thrown by sub class. no new exceptions
+
+overloading is usually done in a class.
+	A class having more than one method with same name but different signature
+overriding is usually across the super and sub classes.	(no inheritance, then no overriding)
+	A sub class defines the method same as found in the super class, including same signature and return type
+
+
+
+public abstract void displayDetails();
+in vb:
+public mustOverride void displayDetails();
+

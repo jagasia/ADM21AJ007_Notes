@@ -1,0 +1,500 @@
+IO Stream
+	Byte
+		InputStream
+			FileInputStream		to read bytes from a FIle
+			DataInputStream		to read data as primitive types (like int, char, float)
+			BufferedInputStream	to read bytes using fixed buffer size	ex:	100 bytes at a time
+			ObjectInputStream	to read data from a source as Object
+		OutputStream
+			FileOutputStream
+			DataOutputStream
+			BufferedOutputStream
+			ObjectOutputStream
+	Character
+		Reader
+			FileReader		to read character from a file
+			BufferedReader		to read character from a source in specific length
+		Writer
+			FileWriter
+			BufferedWriter
+
+
+In addition to these classes,
+	a basic class called "File"
+
+	File
+		can be used to represent a file or directory (folder) as an object
+
+		we have seen exAMPLE for using a File object to list all the contents of a file
+	I gave you a task to print all the
+			files 
+			folders
+	present in a specific location
+
+
+File f=new File("D:\\jag");
+		String[] names = f.list();
+		for(String s:names)
+			System.out.println(s);
+
+list() method returns only the names as a String array
+
+
+----------------To list only the directories-------------
+File f=new File("D:\\jag");
+		File[] arr = f.listFiles();
+		for(File x:arr)
+		{
+			if(x.isDirectory())
+				System.out.println(x.getName());
+		}
+
+--------------To list only the files---------------------
+File f=new File("D:\\jag");
+		File[] arr = f.listFiles();
+		for(File x:arr)
+		{
+			if(x.isFile())
+				System.out.println(x.getName());
+		}
+-----------------------------------Check if file/folder exists and create----------
+		File f=new File("D:\\jag\\sahil");
+		//create a file if it is not present
+//		System.out.println(f.exists());
+		if(!f.exists())
+		{
+//			f.createNewFile();
+//			System.out.println("Created the file:"+f.getAbsolutePath());
+			if(f.mkdir())
+				System.out.println("Created folder:"+f.getAbsolutePath());
+			else
+				System.out.println("Couldn't create");
+		}
+	
+---------------------------------
+
+in our project, we need to upload files. 
+	means?	all the bytes present in the file must be read and stored in an array of bytes.
+	(File is nothing but storage of bytes)
+
+in this example, 
+	we are going to read all the bytes from a file, and keep it as an array (of bytes)
+	create a new file, and write all the bytes into the file. 
+
+	in our web application, user may choose a file. that file data should be read by our program and create a file in our server and store the bytes	(UPLOAD)
+
+	a program is going to read bytes from a source file and write bytes to a destination file
+	ex:
+		i am going to read all bytes from a picture / video present in my pictures/video folder. 
+		INTO sahil folder
+
+source:
+	C:\Users\rjaga\Pictures\pendrive.jpg
+destination:
+	d:\jag\sahil\pratik.jpg
+
+
+		File source=new File("C:\\Users\\rjaga\\Pictures\\pendrive.jpg");
+		//to read all bytes from the file
+		FileInputStream fis=new FileInputStream(source);
+		//to read the bytes and keep it, we need an array
+		//what should be the size of the byte array?
+		byte []data=new byte[(int) source.length()];
+		fis.read(data);		//all bytes of source file is read into a byte array
+		fis.close();
+		//------------------------
+		FileOutputStream fos=new FileOutputStream("d:\\jag\\sahil\\pratik.jpg");
+		//fos can create the file while writing bytes. no need to create file 
+		fos.write(data);
+		fos.close();
+		System.out.println("File is created at d:\\\\jag\\\\sahil\\\\pratik.jpg");
+
+-----------------------
+in above code, the entire file bytes are stored in a byte array and then written into a destination file
+sometimes, the file size may be larger than the RAM
+it is NOT very good idea to read all bytes and keep in array at all.
+
+Best approach would be reading 1 byte at a time and writing that 1 byte into the dest file.
+
+loop this step untile any more byte present in source
+
+
+	File source=new File("C:\\Users\\rjaga\\Pictures\\Logo3.jpg");		
+		FileInputStream fis=new FileInputStream(source);
+		FileOutputStream fos=new FileOutputStream("d:\\jag\\sahil\\anurag.jpg");
+		int i=-1;
+		while((i=fis.read())!=-1)
+		{
+			fos.write(i);
+			fos.flush();
+//			Thread.sleep(10);
+		}
+		System.out.println("Check");
+		fos.close();
+
+in your project, you will be allowing users to upload pictures. 
+	your program will read the bytes of the picture and store them in the database
+		in mysql		longblob	
+		in oracle		BLOB
+
+	this technique will be useful
+
+
+------------------------
+BufferedReader
+		was very popular till java version 1.4		(in 1.5, Scanner was introduced)
+
+
+
+byte		InputStream
+char		Reader
+
+COnvert input stream into reader
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+public class Main_BufferedReader {
+
+	public static void main(String[] args) throws IOException {		
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		String str=br.readLine();
+		System.out.println("You entered:");
+		System.out.println(str);
+	}
+
+}
+
+-----------------------------------------------------------------------------------
+
+Buffered Reader is filter stream	means, it reads from another stream
+Node stream		points to a definite node		FileInputStream	/	FileReader
+Filter stream		works on another stream
+
+if you want to read as bytes,
+	use BufferedInputStream
+
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+public class Main_BufferedReader {
+
+	public static void main(String[] args) throws IOException {		
+//		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+//		String str=br.readLine();
+//		System.out.println("You entered:");
+//		System.out.println(str);
+		BufferedInputStream bis=new BufferedInputStream(System.in);
+		//read bytes using bis
+		DataInputStream dis=new DataInputStream(System.in);
+		int i=dis.readInt();
+		float f=dis.readFloat();
+		char c=dis.readChar();
+		System.out.println(i);
+		System.out.println(f);
+		System.out.println(c);
+		
+	}
+
+}
+
+------------i choose Writer, because, i am writing characters into the strea
+
+
+
+FileWriter fw=new FileWriter("d:\\jag\\sahil\\rajesh.txt");
+		fw.write("India is our country. It is in Asia");
+		fw.flush();		//from memory the data is pushed to storage
+		fw.close(); 	//close also calls flush()	when process terminates gracefully, close() is automatically called
+
+
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+public class Main_BufferedReader {
+
+	public static void main(String[] args) throws IOException {		
+//		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+//		String str=br.readLine();
+//		System.out.println("You entered:");
+//		System.out.println(str);
+//		BufferedInputStream bis=new BufferedInputStream(System.in);
+		//read bytes using bis
+//		FileWriter fw=new FileWriter("d:\\jag\\sahil\\rajesh.txt");
+//		fw.write("India is our country. It is in Asia");
+//		fw.flush();		//from memory the data is pushed to storage
+//		fw.close(); 	//close also calls flush()	when process terminates gracefully, close() is automatically called
+		
+//		FileOutputStream fos=new FileOutputStream("d:\\jag\\sahil\\bharatwaj.dat");
+//		DataOutputStream dos=new DataOutputStream(fos);
+//		dos.write(20);
+//		dos.writeFloat(1.5f);
+//		dos.writeChars("Hello");
+//		dos.flush();
+//		dos.close();
+		FileInputStream fis=new FileInputStream("d:\\jag\\sahil\\bharatwaj.dat");
+		DataInputStream dis=new DataInputStream(fis);
+		int i=dis.read();
+		float f=dis.readFloat();
+		String s=dis.readLine();
+		dis.close();
+		System.out.println(i+"\t"+f+"\t"+s);
+		System.out.println("Done");
+	}
+
+}
+
+
+
+
+in above example,
+	we stored
+		int, float, String
+
+if we read in wrong order, meaning has gone,
+
+So better,
+	we create an object that contains these 3 values inside, and write Object into the file
+	then later, read object from the file
+
+ObjecOutputStream
+ObjectInputStream
+
+
+WHenever, you want to store an object in a stream, the object type (class) must implement an interface (Serializable)
+	Serializable is a marker interface
+	what is meant by marker interface?	an interface that does not have any abstract method is marker interface
+
+	an interface that has only 1 abstract method is a functional interface
+
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+class Student implements Serializable
+{
+	private int id;
+	private String name;
+	private float marks;
+	
+	public Student() {}
+
+	public Student(int id, String name, float marks) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.marks = marks;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public float getMarks() {
+		return marks;
+	}
+
+	public void setMarks(float marks) {
+		this.marks = marks;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", name=" + name + ", marks=" + marks + "]";
+	}
+	
+}
+
+public class ObjectDemo {
+
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+//		Student student=new Student(100, "Raja", 9.5f);
+//		//store this student object into the file
+//		FileOutputStream fos=new FileOutputStream("d:\\jag\\sahil\\harish.dat");
+//		ObjectOutputStream oos=new ObjectOutputStream(fos);
+//		oos.writeObject(student);
+//		oos.flush();
+//		oos.close();
+		
+		//read object from the file
+		FileInputStream fis=new FileInputStream("d:\\jag\\sahil\\harish.dat");
+		ObjectInputStream ois=new ObjectInputStream(fis);
+		Student x = (Student) ois.readObject();
+		System.out.println(x);
+		System.out.println("Check");
+	}
+
+}
+
+
+
+-----------------------------------------------------------
+
+Annotations
+	annotations are like comments in compiled code		(some annotations are also ignored by compiler)
+	comments are ignored by the compiler
+
+	some annotations are retained by the compiler in compiled code
+
+	it is based on the retention chosen by the annotation
+
+	comments are read by programmers		seeing the source code
+	annotation sometimes are read by programs at runtime
+
+	you can write a program, read the annotation of a method and understand that that is the method we are looking for.
+
+
+
+ex:
+	@Override			(retention is compilation. compiler will not include this in byte code)
+	@SuppressWarnings
+	@Deprecated
+
+	Hibernate framework	
+		@Entity
+		@Table
+		@Id
+		@GeneratedValue
+		@Column
+		@Transient
+
+
+1) learn to use existing annotation
+2) create our own annotation
+
+
+
+@Override
+	informs the compile to check the overriding rules followed or not
+	even if i do not use this annotation, overriding is done.	but when the rules are not followed, it will become over loading	
+
+	parent
+		display()
+	child
+		display(int)
+
+		we cannot call the above as a overriding because, signature (must be same but) here is not same
+		so what happens?	
+		a copy of super class emthod	display() and a sub class method display(int)
+		makes it an overloading (2 methods) instead of overriding (hide super and use sub method)
+
+	here, we expected overriding, but happend is overloading
+
+	Override annotation will verify and give compile time error. 
+
+
+@Deprecated
+	informs the IDE that this is deprecated 	means, out of fashion. 	or out dated. discontinued method or old method
+
+	it means, there is a better option available
+
+
+
+Create annotation by ourself
+
+i) give a name for annotation
+ii) choose rention policy
+	source
+	class
+	runtime
+iii) Target
+		this annotation can be used on many targets like
+			Class
+			method
+			constructor
+			variable
+			constants
+			
+
+Garbage collection is a java process that claim unused memory
+	ensures that only the objects which are out of scope are removed
+
+finalize			gc invoke
+dispose				we invoke
+	these 2 methods are used to specify when gc removes an object
+
+Runtime.gc()
+System.gc();		//ask garbage collector to come into action
+
+
+
+
+enum is like a type	(like classes and interfaces)
+	A class can be created inside another class also. Sameway, an enum also can be created inside a class also
+
+
+enum Days{	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY }
+
+enum Days{	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY }
+
+public class EnumDemo {
+
+	public static void main(String[] args) {
+		Days d=Days.MONDAY;
+		System.out.println(d.ordinal());
+	}
+
+}
+
+why all caps?	because, they are constants. THey are not strings
+
+enum Months {}
+
+
+-----------------------------------
+Assertions		are assumptions that can be placed in various locations of the program (in executable section)
+
+	are conditions			(that return true or false)
+		if the assertion returns true, the program continues,
+		if the assertion returns false, the program terminates
+
+then what way it is different from Exceptions?
+		when we throw exception, if it is handled, the program continues.
+					if it is not handled, the program terminates.
+		so how assertions differ from exceptions?
+
+assertions can be enabled or disabled while running the program. This option is not ther for exceptions
+
+in cmd prompt:
+	java -ea MyProgram			(while running, assertion is enabled)
+
+	java -da MyProgram			(while running, assertion is disabled)
+
+But in eclipse, how to ea and da assertion?
+	in Run menu, there is a run configuration	
+		there you can see 
+

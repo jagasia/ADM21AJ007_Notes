@@ -1,0 +1,270 @@
+JDBC
+	Java Database Connectivity
+	
+
+	Statement		*
+	PreparedStatement
+	CallableStatement
+
+	execute()
+	executeQuery()		*
+	executeUpdate()
+
+You have learnt to create database in mysql
+and also to write sql statements for
+	DDL
+	DML
+	DQL
+	etc etc
+
+NOW we learn to execute
+	select
+	insert
+	update
+	delete
+		from java program into mysql
+
+1) load the driver		(driver is provided by the RDBMS vendor in java language)
+		example
+			mysql		com.mysql.jdbc.Driver		
+			oracle		oracle.jdbc.Driver
+
+	these driver classes are implementation of the Driver interface provided by jdbc
+		Driver driver = new com.mysql.jdbc.Driver();
+2) use
+	URL
+	username
+	password
+		to connect with a RDBMS server
+	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank","root","");
+
+3) once connection is obtained, create Statement that represents a query
+	Statement st=con.createStatement();
+
+4) execute the query
+	ResultSet rs = st.executeQuery("select * from branch");
+
+5) display the result
+
+
+
+How to add jar file to a java project?		(first copy the jar to your project folder otherwise, when we upload project, the jar will not be uploaded)
+	right click the project
+		-> Properties
+			-> Java Build Path
+				-> library tab
+					-> add external jar
+
+
+
+Task:
+	write a java program to read all records from a table in your mysql db
+
+
+
+in prev demo, 
+	you learnt to retrieve all records from a table in mysql using a java program.
+
+Now, lets understand the difference between
+	Statement		is used to execute simple queries
+			simple in the sense, no run time parameters
+				SELECT * FROM Branch
+				SELECT * FROM Branch WHERE bid='B00001'		
+			
+			
+	PreparedStatement	is used to execute parameterized queries
+				SELECT * FROM  branch WHERE bid=?
+
+				? means, placeholder or positional parameter
+				for this parameter, we need to supply value at run time
+
+	Lets see an example for 
+			PreparedStatement
+
+example:
+	we get input from the user. (bid is the input)
+	for that bid, the branch will be displayed
+
+
+
+
+Statement
+	cannot be used to execute queries that need parameters at run time
+PreparedStatement
+	is used to execute parameterized queries
+
+String sql="SELECT * FROM Branch WHERE bid='"+bid+"'";
+	this is poor practice. This will lead to sql injection
+
+
+uid="raja";
+pwd="rama";
+SELECT * FROM USER_MASTER WHERE USERNAME='"+uid+"' AND PASSWORD='"+pwd+"'";
+
+SELECT * FROM USER_MASTER WHERE USERNAME='abcd' or 1=1 --' AND PASSWORD='i dont care'
+
+
+IF YOU ASK USER TO ENTER USERNAME AND PWD
+
+abcd' or 1=1 --
+i dont care
+
+
+SELECT * FROM USER_MASTER WHERE USERNAME=? AND PASSWORD=?;
+
+
+
+
+
+if a photo is to be supplied to the table
+	how can we concatenate a photo or sound
+
+INSERT INTO CUSTOMER VALUES (?,?,?,?)
+
+	byte []data			///get all bytes from a pic file
+st.setBytes(4,data);
+
+
+column is a longblob column in mysql
+	BLOB column in oracle
+
+
+
+executeQuery();				this should be used for "SELECT" queries. because, we expecte ResultSet when executing a select query
+
+whenever we execute DML	
+	INSERT
+	UPDATE
+	DELETE
+		use executeUpdate()	method		this returns int	(how many rows affected) that no
+
+
+Scanner sc=new Scanner(System.in);
+		String bid, bname, bcity;
+		System.out.println("Branch Id:");
+		bid=sc.nextLine();
+		System.out.println("Branch Name:");
+		bname=sc.nextLine();
+		System.out.println("Branch City:");
+		bcity=sc.nextLine();
+		//lets add record into the Branch table
+		Connection con = ConnectionFactory.getConnection();
+		PreparedStatement st = con.prepareStatement("INSERT INTO Branch VALUES(?,?,?)");
+		st.setString(1, bid);
+		st.setString(2, bname);
+		st.setString(3, bcity);
+		int no = st.executeUpdate();		//instead of executeQuery, use executeUpdate
+		System.out.println(no+" row(s) affected");
+
+
+
+
+1) we need to separate the information related to a particular RDBMS from the java code
+
+
+Any code, on change, needs re compliation, is a hard code
+	do not hard code the connection information that always change when we migrate
+
+	Let us keep those information in a "text" file	(so that any change, will not required compilation)
+	that is called as "properties" file
+	properties files are configuration files
+	
+
+In Main3 demo
+	we added a row into the Branch table
+	in similar fashion, you can also UPDATE, DELETE
+
+
+PreparedStatement st = con.prepareStatement("UPDATE Branch SET bname=?, bcity=? WHERE bid=?");
+
+PreparedStatement st = con.prepareStatement("DELETE FROM Branch WHERE bid=?");
+	//here, only bid should be supplied to remove this row
+
+SELECT
+INSERT
+UPDATE
+DELETE
+
+Task:
+	Create one class 
+			BranchDao.java
+	that has methods
+			addBranch(Branch branch)	"INSERT INTO..."
+			modifyBranch(Branch branch)	"UPDATE BRANCH..."
+			deleteBranch(String bid)	"DELETE FROM..."
+			findBranchById(String bid)	"SELECT * FROM Branch WHERE bid=?"
+			getAllBranches()		"SELECT * FROM Branch"
+
+	using the given sample code, create the above class.
+	Note:		if you do not have Branch table, u can choose any other table.
+
+
+
+in any project,
+	there will be some code to 
+		define data
+		access data	(from the database)
+
+e-shopping project
+	there will be UI	for web UI
+		HTML
+		CSS
+	the data will be stored permanently in database
+		MySql
+
+
+in html
+	when user enters data, and submit the form, 
+		in html, we cannot write code to store data in the database
+	so we submit the form to a java program that can store the data in the database.
+	How a java program can access database
+		that is what we do now!
+
+1 team will be creating database, table etc
+1 team will be creating HTML css
+1 team will be creating java code that will access the database
+	we are now here.	the team that is going to write java code that access database.
+			we do not know what kind of input output UI second team is going to do
+			so we create the code independent of input/output
+
+
+
+	addBranch
+		to add a row in Branch table, we need BID, BNAME, BCITY		
+		instead of getting input from the user, (that is not done by our team)
+			we keep them as parameters
+
+			int sum(int i, int j)
+			{
+				return i+j;		//what is i and j? the value of i and j?	i dont care
+			}
+
+		addBranch(String bid, String bname, String bcity)
+
+			instead of supplying 3 parameters, why don't we supply 1 composite type parameter
+		addBranch(Branch branch)
+			what is this branch object?	
+				this contains		bid, bname and bcity inside as properties
+	ie., Branch is a class that contains 3 properties
+
+
+
+Branch	is an entity in E-R diagram
+	So Branch becomes class in Java
+		and Branch becomes TABLE IN mysql
+	Branch.java
+		is a Branch class		(this is data definition)
+
+
+Branch class is compared to BRANCH table in db
+Branch object is compared to row in BRANCH table
+
+
+
+If i say the table name is Employee
+	you should be able to create
+		Employee.java		check what are the columns in the Employee table, they become property here
+		EmployeeDao.java
+				select all
+				select by id
+				add, update, delete

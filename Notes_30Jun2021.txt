@@ -1,0 +1,105 @@
+JQuery
+	Javascript Query
+
+imagine if someone who is good in javascript, creates lot of functions 
+	rajesh.js
+
+		fn1()
+		fn2()
+		
+
+how will you use this js file in your html program?
+	<script src="rajesh.js">
+	</script>
+
+	<script src="http://googleapi.com/jquery.js">
+	</script>
+
+
+
+in order to use jquery in our html program,
+
+we have 2 options:
+	1) create a jquery.js file in our folder itself
+	2) refer to the jquery present in CDN				
+
+
+
+
+
+to use jquery
+	we can create a file	"jquery.js"	
+	paste the jquery contents copied from jquery cdn		and refer that file using <script src=
+
+	or
+directly refer jquery cdn from <script src=
+
+
+
+
+1) selectors
+	in css, we learnt some selectors, that are same in jquery also
+	i) element
+	ii) id				#
+	iii) class			.
+	iv) pseudo selection
+	v) universal selector
+	
+
+
+hello world program in jquery
+
+easy to use version of javascript		
+
+
+innerHTML
+html
+
+innerText
+text
+
+value
+val()
+
+
+how do you handle events in javascript?
+<input type=button id=btn1 onclick="fn1()" />
+
+there is another way we can handle events in javascript?
+
+document.getElementByid("btn1").addEventListener("click",fn1);
+
+document.getElementById("myBtn").addEventListener("click", displayDate);
+
+
+
+a javascript programmer 
+a html programmer			HTML file
+
+
+in jquery, we use selectors in
+$("#btn")
+
+
+
+
+create a html file "login.html"
+	User name:
+	Password:
+	confirm password:
+	button
+
+when i click button
+	password and confirm password must be same
+
+otherwise
+	display error message in red color
+
+username should be different from password
+
+Use JQuery to do this
+
+
+
+How to use css in jquery
+	.css method

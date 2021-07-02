@@ -1,0 +1,707 @@
+Threads
+--------
+	So far we have created lot of java programs.
+	In these programs, mostly there was "main" method.
+	if there is no main method, the program cannot run. 
+		ex:
+			Employee.java			(no main method)
+		so we do not run Employee.java
+
+	When you run the program, what happens?
+		the CPU creates a process.
+	can we see all the processes running in a computer?
+		in Task Manager, we can see.
+
+	We saw lot of processes running. 
+	What is a process?
+		Running instance of a program.
+
+	CPU allocates resources to each process.
+		resource, according to me, can be 
+			Time
+			Memory
+
+
+Process:
+	can contain threads			(Thread is not defined only in Java language)
+
+A process contains atleast 1 thread.	So far, we executed lot of java programs. Believe me, those programs (sorry processes contained at least 1 thread.)
+
+	if a program runs, then there is a thread definitely.	
+	main method, is actually called as "Main" thread.
+
+	so, execution flow starts from main method. there is only 1 flow of execution so far, because, we created "Single threaded process" so far.
+
+	
+Thread 
+	is a single flow of execution in a process
+
+
+There can be many threads in a process. 
+	It is called as Multi-Threaded process.
+		means, 1 main thread and multiple child threads.
+
+A process that contains more than 1 thread, is a multi threaded process.
+
+Why we need multiple threads in a process?
+	because, we need Multi-tasking
+
+WHat is multi tasking?
+	In a computer, can you play song, and continue working in another application?
+
+	even in a mobile, i can type sms/ whatsapp and in between, refer some other screen, copy data and paste it in sms/whatsapp
+	that means multiple processes are running in the OS.
+
+	This is process based Multi tasking		(multiple processes are allowed to run in an OS/CPU)
+
+	wHAT is thread based multi tasking?		(Multiple Threads run inside a Process)
+
+Comparing Process based vs Thread based multi tasking:
+
+	if 2 tasks are performed using 2 processes, then
+		CPU allocates resources for each process		(Costly)
+
+	if 2 tasks are performed using 2 thread, inside a single process, then
+		CPU allocates resources for the process only, 
+		threads share the resources of the process.
+
+How threads improve the efficiency of the process:
+	Imagine the CPU as a Doctor. Each thread as a Ward in a hospital.
+	Doctor goes for rounds across the wards
+
+	the doctor's time is shared by the patients in the same ward.
+
+sc1:
+	Process has only 1 Thread:
+		that 1 thread is waiting for user input. 
+		Now CPU time is utilized as 0%
+
+sc2:
+	Process has 2 threads:
+		1 thread is waiting for user input. other thread work is done by CPU
+		Now CPU time is utilized as 50%
+
+sc3:
+	Process has 3 threads:
+		1 is .......
+		Now CPU time is utilized as 66%			2/3
+
+sc4:
+		Now,,,...			75%		3/4
+
+in this given scenarios,
+		0 - 50 - 66 - 75
+
+
+So, more threads does not mean more efficiency. The number of threads should optimally be used.
+
+advantages:
+	improves efficiency of the process
+	sharing the resources
+	effectivce utilization of the resources
+	parallel execution
+	asynchronous execution of the process
+		display1()
+		display2()
+
+		In single threaded process:
+			if we call these 2 methods, 
+			display1() should complete. Only then display2() will start.
+
+		If we call these 2 methods using 2 different threads:
+			both display1()
+			and display2()	methods are going to be executed parallely.
+
+disadvantages:
+	the output cannot be predicted in async process
+		suppose, if 5 horses run in a race, which horse will come first?
+
+	thread will experience locks. Lock starvation means, the thread is postponed due to low priority
+
+	dead lock		2 threads waiting for each other to release the lock
+
+	Locking of threads happen when they enter synchronized block or method
+
+--------------------------------------------------------
+
+You have understood
+	Thread
+	Process	
+	Multi tasking
+	Multi threading
+
+Lets see how we can create a child thread	(main is already a thread)
+	a thread can be created using "Thread" class
+	Runnable interface
+	
+there are 2 ways we can create child threads
+	i) extend Thread
+	ii) implement Runnable
+
+in both these cases, we need to implement/override a method called "run()"
+	run() is the only method defined in the Runnable interface (can you name what type of interface Runnable is?)
+		Functional interface
+
+example:
+		call 2 methods using 2 threads		
+		display1()		this is going to display all the odd numbers starting from 5001
+		display2()		this is going to display all the even numbers starting from 2
+
+Demo1:
+	using i) extend Thread
+class Odd extends Thread
+{
+	public void run()
+	{
+		for(int i=5001;true;i+=2)
+		{
+			System.out.println(i);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+class Even extends Thread
+{
+	public void run()
+	{
+		for(int i=2;true;i+=2)
+		{
+			System.out.println(i);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+public class Main1 {
+
+	public static void main(String[] args) {
+		Odd o=new Odd();
+		Even e=new Even();
+		//start these 2 threads using "start" method
+		o.start();
+		e.start();
+	}
+
+}
+
+
+Demo2:
+	same example using 
+	ii) implements Runnable
+
+
+class T1 implements Runnable
+{
+
+	@Override
+	public void run() {
+		for(int i=100001;true;i+=2)
+		{
+			System.out.println(i);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+}
+class T2 implements Runnable
+{
+
+	@Override
+	public void run() {
+		for(int i=102;true;i+=2)
+		{
+			System.out.println(i);
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+}
+public class Main2 {
+
+	public static void main(String[] args) {
+		Thread odd=new Thread(new T1());
+		Thread even=new Thread(new T2());
+		odd.start();
+		even.start();
+
+	}
+
+}
+
+
+
+
+-------------------------------------------------------------------------------
+Functional interface
+	can be implemented using anonymous functions also
+
+
+public class Main {
+
+	public static void main(String[] args) {
+		Thread t1=new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				for(int i=333;true;i+=2)
+				{
+					System.out.println(i);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			
+			}
+		});
+		Thread t2=new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				for(int i=2;true;i+=2)
+				{
+					System.out.println(i);
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}				
+			}
+		});
+		
+		t1.start();
+		t2.start();
+	}
+
+}
+
+--------------------------------------------------------
+Lambda implementation of Runnable interface:
+---------------------------------------------
+
+public class Main3 {
+
+	public static void main(String[] args) {
+		Thread t1=new Thread(()-> {
+			for(int i=1001;true;i+=2)
+			{
+				System.out.println(i);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		Thread t2=new Thread(()->{
+			for(int i=22;true;i+=2)
+			{
+				System.out.println(i);
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		t1.start();
+		t2.start();
+	}
+
+}
+
+
+----------------------------------------------------------
+Sometimes, 
+	Multiple threads will run parallely or simultaneously
+	But when a thread enters a sensitive portion of code, it should ensure that no other threads enter that block or method until, this current thread exits the block or method.
+
+	This is achieved by "Thread Synchronization"
+	
+	Thread synchronization, ensures that NO 2 threads access a shared resource at a time. 
+	Once a thread enters the sync block or method, other threads are made wait and only after the current thread exits from the block, another thread can enter the block.
+
+	If 2 threads access 2 different threads, there is no sync required or possible
+
+sync using "join" method:
+	there is a join method (like sleep) 
+	this will prevent all the thread from starting.
+	already started threads can continue.	New threads cannot begin until the currently running threads end.
+
+class MyThread extends Thread
+{
+	public void run()
+	{
+		for(int i=0;i<10;i++)
+		{
+			System.out.println(getName());
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+}
+public class Main4 {
+
+	public static void main(String[] args) throws InterruptedException {
+		MyThread t1, t2, t3, t4;
+		t1=new MyThread();
+		t1.setName("Thread 1");
+		t2=new MyThread();
+		t2.setName("Thread 2");
+		t3=new MyThread();
+		t3.setName("Thread 3");
+		t4=new MyThread();
+		t4.setName("Thread 4");
+		t1.start();
+		t2.start();
+		t1.join(); //whoever started, can continue. those who have not yet started, pls wait. Whoever started, can complete. then you can start.
+		t3.start();
+		t4.start();
+	}
+
+}
+
+
+---------------------------------------------------------	
+Example for sync
+	i) using synchronized block
+	ii) using synchronized method
+
+
+Remember, only when multiple threads try to enter same code of same object. Then only sync is possible
+	ex:
+		airport security gate.	
+			only 1 gate, 2 persons, then sync make sure one person at a time enters the gate
+
+			two gates, 2 persons, then no way sync will restrict. because, both use different gate
+
+in this demo, we use 2 threads accessing 1 object
+
+class Calculator
+{
+	public void display()
+	{
+		String threadName = Thread.currentThread().getName();
+		System.out.println("Display method entered by "+threadName);
+		System.out.println(threadName+" is going to enter for loop");
+		for(int i=0;i<10;i++)
+		{
+			System.out.println();
+			try {				
+				System.out.println(threadName+" : "+i);
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		System.out.println(threadName+" has exited the for loop");
+	}
+}
+
+class Thread1 extends Thread 
+{
+	private Calculator c;
+	public Thread1() {}
+	
+	public Thread1(Calculator c) {	
+		this.c = c;
+	}
+
+	public void run()
+	{
+		c.display();
+	}
+}
+
+public class Main5 {
+
+	public static void main(String[] args) {
+		Calculator calc=new Calculator();
+		Thread1 t1=new Thread1(calc);
+		Thread1 t2=new Thread1(calc);
+		t1.setName("Sahil");
+		t2.setName("Pratik");
+		t1.start();
+		t2.start();
+	}
+
+}
+
+
+------------------------------sync using sync block------------------
+
+class Calculator
+{
+	public void display()
+	{
+		String threadName = Thread.currentThread().getName();
+		System.out.println("Display method entered by "+threadName);
+		System.out.println(threadName+" is going to enter for loop");
+		for(int i=0;i<10;i++)
+		{
+			synchronized (this) {
+				System.out.println();
+				try {				
+					System.out.println(threadName+" : "+i);
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println(threadName+" has exited the for loop");
+	}
+}
+
+class Thread1 extends Thread 
+{
+	private Calculator c;
+	public Thread1() {}
+	
+	public Thread1(Calculator c) {	
+		this.c = c;
+	}
+
+	public void run()
+	{
+		c.display();
+	}
+}
+
+public class Main5 {
+
+	public static void main(String[] args) {
+		Calculator calc=new Calculator();
+		Thread1 t1=new Thread1(calc);
+		Thread1 t2=new Thread1(calc);
+		t1.setName("Sahil");
+		t2.setName("Pratik");
+		t1.start();
+		t2.start();
+	}
+
+}
+
+------------------------------------------------
+--------------------------synchronized method------------------------
+class Calculator
+{
+	public synchronized void display()
+	{
+		String threadName = Thread.currentThread().getName();
+		System.out.println("Display method entered by "+threadName);
+		System.out.println(threadName+" is going to enter for loop");
+		for(int i=0;i<10;i++)
+		{
+//			synchronized (this) {
+				System.out.println();
+				try {				
+					System.out.println(threadName+" : "+i);
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//			}
+		}
+		System.out.println(threadName+" has exited the for loop");
+	}
+}
+
+class Thread1 extends Thread 
+{
+	private Calculator c;
+	public Thread1() {}
+	
+	public Thread1(Calculator c) {	
+		this.c = c;
+	}
+
+	public void run()
+	{
+		c.display();
+	}
+}
+
+public class Main5 {
+
+	public static void main(String[] args) {
+		Calculator calc=new Calculator();
+		Thread1 t1=new Thread1(calc);
+		Thread1 t2=new Thread1(calc);
+		t1.setName("Sahil");
+		t2.setName("Pratik");
+		t1.start();
+		t2.start();
+	}
+
+}
+
+----------------------------------------------------------------------------
+Lambda
+	is a new feature introduced in Java 8
+
+is used to simplify the implementation of functional interfaces
+
+An interface that has only 1 abstract method is Functional interface.
+It can be implemented directly when an instance of implementation is required.
+
+
+
+------------------------------------------------
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+class IntegerComparator implements Comparator<Integer>
+{
+
+	@Override
+	public int compare(Integer o1, Integer o2) {
+		// TODO Auto-generated method stub
+		return o2-o1;
+	}
+	
+}
+
+public class Main6 {
+
+	public static void main(String[] args) {
+		Integer arr[]= {9,3,8,10,11,22,12,55,35};
+		Arrays.sort(arr, (o1,o2)->o2-o1);		//lambda
+//		Arrays.sort(arr,new IntegerComparator());	//traditional approach
+//		Arrays.sort(arr,new Comparator<Integer>() {	//modern approach (anonymous implementation)
+//
+//			@Override
+//			public int compare(Integer o1, Integer o2) {
+//				// TODO Auto-generated method stub
+//				return o2-o1;
+//			}
+//		});
+		for(Integer x:arr)
+			System.out.println(x);
+	}
+
+}
+
+----------------------------------------------------------------
+Stream API
+	not to be confused with IO Streams at all
+
+there is a collection of 100 objects
+	i add a filter and reduce it to 50 objects
+	then i add grouping set and reduce it to 20 objects of key value pair
+	then i use order by
+	etc etc
+
+	everytime, i reduce the collection and proceed operations on the result obtained. 
+	This looks like a stream
+
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
+public class Main8 {
+
+	public static void main(String[] args) {
+		List<Employee> employees=new ArrayList<>();
+		employees.add(new Employee(1, "Ram", "Kumar", 1234567.0, "ECE"));
+		employees.add(new Employee(7, "Alexander", "Babu", 1234567.0,"Mech"));
+		employees.add(new Employee(9, "Yogi", "Babu", 1234567.0,"ECE"));
+		employees.add(new Employee(8, "Ram", "Kumar", 1234567.0,"Civil"));		
+		employees.add(new Employee(2, "Siva", "Kumar", 84383.0,"Mech"));
+		employees.add(new Employee(3, "Rama", "Krishna", 747474.0,"Mech"));
+		employees.add(new Employee(4, "Siva", "Raja", 383838.0,"ECE"));
+		employees.add(new Employee(5, "Rama", "Nathan", 199111.0,"Mech"));
+		employees.add(new Employee(6, "John", "Kennedy", 1024567.0,"ECE"));
+		//map is used to translate a complex object into simple type
+		//that means, employee has lot of properties, map is used to specify the property we are interested in
+//		List<String> result = employees.stream()
+//		.map(Employee->Employee.getFirstName())
+//		.map((a)->a.toUpperCase())
+//		.distinct()
+//		.collect(Collectors.toList());
+//		for(String e:result)
+//			System.out.println(e);
+		
+		//display the number of employees present in each department (similar to group by in sql)
+		Map<String, Double> result = employees.stream()
+		.collect(Collectors.groupingBy(Employee::getDepartmentName, Collectors.summingDouble(Employee::getSalary)));
+		
+		for(Entry<String, Double> e:result.entrySet())
+			System.out.println(e);
+		
+		
+	}
+
+}
+
+
+--------------------------------
+jAVA 8 provides 
+	LocalDate
+	LocalTime
+
+classes to perform arithmetic on Date and time
+
+	for example finding age based on date of birth and current date is possible using LocalDate
+
+
+
+import java.time.LocalDate;
+import java.time.Period;
+
+public class Main9 {
+
+	public static void main(String[] args) {
+		LocalDate dob=LocalDate.of(1999, 01, 01);
+		LocalDate today=LocalDate.of(2021, 05, 07);
+		
+		//age based on dob
+		Period age = Period.between(dob, today);
+		System.out.printf("You are %d years, %d months and %d days young!",age.getYears(),age.getMonths(),age.getDays());
+	}
+
+}
+
+

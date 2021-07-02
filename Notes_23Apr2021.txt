@@ -1,0 +1,188 @@
+JOINS
+	we need to retrieve data from more than one table,
+	we need to use JOIN
+
+
+Lets take an example now:
+	display all the transaction details
+
+	SELECT * FROM trandetails;
+
+SELECT c.custid, fname, acnumber FROM customer c, account a
+where c.custid=a.custid;
+
+
+SELECT c.custid, fname, acnumber
+FROM customer c JOIN account a
+ON c.custid=a.custid;
+
+
+A join is usually INNER JOIN only. 
+
+SELECT c.custid, fname, acnumber
+FROM customer c INNER JOIN account a
+ON c.custid=a.custid;
+
+I may or may not specify "INNER" but a join is inner join only. Means, it produces only matching records.
+
+Suppose, if we need all records from one table and matching records from another table, then we should use outer join
+
+cartesian join
+______________
+when a join is performed without join condition, then all possible combination of those 2 tables are obtained. this is cartesian join
+
+
+
+1) INNER JOIN
+2) OUTER JOIN
+	LEFT OUTER JOIN
+	RIGHT OUTER JOIN
+	FULL OUTER JOIN		(is not possible in mysql. If you still need the full outer join effect, we can use UNION)
+	SELECT c.custid, fname, acnumber
+	FROM customer c RIGHT OUTER JOIN account a
+	ON c.custid=a.custid
+	UNION
+	SELECT c.custid, fname, acnumber
+	FROM customer c LEFT OUTER JOIN account a
+	ON c.custid=a.custid;
+
+3) CROSS JOIN			(no join condition or specify CROSS JOIN, then we get product)
+	every join performs a cartesian product and then filters using the join condition
+
+4) SELF JOIN
+	when a table joins to itself, then it is self join
+
+		SELECT E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME, E.MANAGER_ID, M.FIRST_NAME AS "MANAGER NAME" 
+			FROM EMPLOYEES E JOIN EMPLOYEES M
+			ON E.MANAGER_ID=M.EMPLOYEE_ID
+			ORDER BY E.EMPLOYEE_ID;
+
+
+While doing a project, you are creating the tables. 
+	How do you arrive at a conclusion that there should be 5 tables, what are the columns, etc
+	there is a scientific approach to come to that solution
+that is what NORMALISATION is.
+
+BillNo	BillDate	ProductName	Description	Price	CustomerName	Address	Phone	Quantity	NetAmount
+
+1) an unnormalized data may have non atomic values	 (combination of values) and redundant data
+2) one cell may contain multiple data inside
+
+when we rework on that large table, we will arrive at 1st normal form if
+	1) the table does not contain any cell with more than one data.
+	2) each cell has precisely only 1 data
+		ex: 	customerName 		has 3 portions, split it into 
+				firstName, lastName, middleName
+
+NOW WE HAVE ARRIVED AT 1NF	
+BillNo	BillDate	ProductName	Description	Price	firstName	lastName	Address	Phone	Quantity	NetAmount
+1	23-04-2021	Pencil	used to write	10	Rajesh	Kumar	Express Avenue, Chennai, Tamil Nadu	989898989	10	100
+2	24-04-2021	Eraser	used to erase	5	Rajesh	Kumar	Express Avenue, Chennai, Tamil Nadu	978979898	15	75
+
+
+in INF, address should have been split into 
+	ADDRESS1, ADDRESS2, CITY, STATE, PINCODE
+identify the group of columns which are functionally dependent on the whole key and functionally not dependent on the whole key
+
+	in the above table in 1NF, the 
+		FIRSTNAME
+		LASTNAME
+			are dependent only on customer and NOT ON SALES (we are in sales table. so we remove them)
+
+	
+SO IN 2NF the table looks like:
+SALES							
+BillNo	BillDate	ProductName	Price	CUSTOMERNAME	Quantity	NetAmount	
+1	23-04-2021	Pencil	10		10	100	
+2	24-04-2021	Eraser	5		15	75	
+							
+							
+CUSTOMER							
+FIRSTNAME	LASTNAME	ADDRESS	PHONE				
+							
+PRODUCT							
+PRODUCTNAME	DESCRIPTION						
+
+
+CITY IS BASED ON CUSTOMER BUT STATE IS NOT BASED ON CUSTOMER.
+i.e., city is decided by customer	but customer cannot decide the state
+
+remove it
+create a city master
+	CITYID, CITY, STATE					(Maintain a master table for city)
+
+so if customer says, i am from BANGALORE, you dont ask him which state he belongs to.	it is found in city master
+
+TO CONVERT THE TABLE INTO 3NF
+Introduce primary key in the tables. Only columns dependent on primary key should be retained in the table, remaining columns should be grouped to form new table.
+
+1) 1 NF	-	each cell has precisely only 1 data
+2) 2 NF	-	attributes functionally dependent on whole key is retained
+3) 3 NF	-	attributes functionally dependent on primary key is retained
+4) BCNF	-	when a relation has multiple candidate keys, and they are composite and they are overlapping
+		
+
+
+SELECT * FROM CUSTOMER
+WHERE city=
+(select city from customer where fname='Ramesh');
+
+i) the sub query should be in the right side of the condition
+ii) operators used in the condition 
+		>		<		>=		<=		!=		=
+	the above operators, cannot be used when the sub query returns more than 1 value
+
+III) SUB queries do not need to have order by except when there is top N analysis
+
+ideally, the sub query should return only 1 row and 1 column	(for above operators)
+
+SELECT * FROM CUSTOMER
+WHERE city in
+(select city from customer where mname='chandra'
+);
+this query uses "IN" operator. so the sub query can return more than 1 row also
+
+there are some modifier operators to use when subquery returns more than 1 row
+
+>=ANY
+>=ALL
+
+similaryl <	<=	>	>=	can be used with ANY or 	ALL
+
+
+SELECT acnumber, count(tnumber) 
+FROM TRANDETAILS
+GROUP BY acnumber
+HAVING count(tnumber)>=ALL
+(SELECT count(tnumber) 
+FROM TRANDETAILS
+GROUP BY acnumber);
+
+
+
+FUNCTIONS:
+	Numeric
+		ROUND
+		CEIL
+		FLOOR
+		ABS
+	date	
+		MONTH
+		YEAR
+		
+	character
+		UPPER
+		LOWER
+		SUBSTRING
+		SUBSTR
+		SUBSTRING_INDEX
+	aggregate
+		COUNT
+		MIN	
+		MAX
+		SUM
+		AVG
+
+supper operands, it will return value
+
+select address, substring_index(address,'-',-2), substring_index(substring_index(address,'-',-2),'-',1) from air_passenger_profile;

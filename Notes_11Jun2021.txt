@@ -1,0 +1,107 @@
+spring boot mvc form validation
+	Form validation
+	Internationalization
+	Exception handler
+
+Form validation is 
+	validating the data entry done by the user in the form.
+	<form action=
+	<form:form action=			here, we use spring forms custom tag library
+
+		for that we add taglib directive 
+
+	data entry mistakes can be handled using
+		javascript
+		jquery
+		angular typescript
+
+	despite all these techniques, why should a controller (java program) validate the data entry?
+	it is because, the application is developed in multiple layers.
+		one layer is developed by us.
+		another layer is developed by other enterprise.
+
+		for example, the theater database and Dao CODE are done by INOX enterprise.
+		But we are able to book ticket using BookMyShow app.
+		means, bookmyshow app is creating a front end application which access the backend developed by INOX
+
+		Inox, cannot trust the front end appln that it will validate the data entry
+
+	so additional data entry mistake checks are performed by the back end program.
+
+	
+1) Lets create a spring boot application
+2) configure it to a MVC Project
+	we can configure a project into MVC project BY
+		i) application.properties
+			spring.mvc.view.prefix=/WEB-INF/jsp/
+			spring.mvc.view.suffix=.jsp
+
+		ii) another way
+			we can create a configuration class 	annotated by @Config
+			and specify a @Bean		internalViewResolver
+				and specify the properties for prefix and suffix
+
+
+
+@SpringBootApplication
+	is a combination of lot of annotations
+we have configured prefix and suffix using 
+	@SpringBootApplication
+@Controller
+public class SpringMvcFormsConfigDemoApplication {
+
+	@Bean
+	public ViewResolver configureViewResolver()
+	{
+		InternalResourceViewResolver vr = new InternalResourceViewResolver();
+		vr.setPrefix("/WEB-INF/jsp/");
+		vr.setSuffix(".jsp");
+		return vr;
+	}
+	
+
+
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.47</version>
+		</dependency>
+
+
+
+	@RequestMapping(method = RequestMethod.POST, value = "dml", params = "add")
+	public String addBranch(@Valid Branch branch,  BindingResult br, ModelMap model)
+	{
+		
+		System.out.println(br.hasErrors());
+		if(br.hasErrors())
+		{
+			List<Branch> branches = bdao.read();
+			model.addAttribute("branches", branches);
+			model.addAttribute("branch", branch);
+			return "branch";
+		}
+		model.addAttribute("branch", branch);
+		List<Branch> branches = bdao.read();
+		model.addAttribute("branches", branches);
+		System.out.println("Adding "+branch);
+		int status = bdao.create(branch);
+		System.out.println(status+" row(s) inserted");
+		return select(branch.getBid(), model);
+	}
+
+NOTICE that BindingResult was pushed to end. Does not work
+
+Internationalization
+
+	We allow users to choose the language of their choice.
+	In our application, we provide Language as a choice.
+	They choose English. 	or German
+
+we will create more than one application.properties file
+	en		English
+	es		Spanish
+	de		German
+	fr		French
+

@@ -1,0 +1,109 @@
+JDBC		Java DataBase Connectivity
+
+why it is needed?
+	whenever a java program has to access a database, 
+	we need JDBC
+what exactly it is?
+	no need to install anything in addition 
+	jdk is enough	(already there)
+	just some packages
+		java.sql
+		javax.sql
+
+	these packages contain lot of 
+		interfaces
+		classes
+			methods	
+
+	that can be used to do all operations in a database like
+		SELECT
+		INSERT
+		UPDATE
+		DELETE
+
+	jdbc is consistent for most of the databases in the world like
+		SQL Server	(Microsoft)
+		Oracle		(Oracle)
+		DB2		(IBM)
+		MySql		(Oracle)
+
+	we use mysql
+
+
+		
+1) lets connect to a mysql server from java program. What are the steps?
+	i) load the driver		(we will discuss what is a driver)
+	ii) URL	, UNAME, PASSWORD
+	iii) get connection using the info given above
+	iv) create an object representation of a SQL query
+		Statement
+		PreparedStatement
+		CallableStatement
+	v) execute the query 
+		execute
+		executeQuery
+		executeUpdate
+	vi) Result set
+		loop the records from the beginning till end
+	
+
+WHat is driver?
+	there are lot of RDBMS in this world. 
+	They way they store data, or operate is definitely different.
+	how can a java program instruct those RDBMS to store or retrieve data. IMPOSSIBLE
+
+	So what java suggested the RDBMS vendors.
+		These vendors should write java programs that can access their database.
+
+	day before yesterday, we learnt to store data in the file using java program. So you know how objects can be stored in the database.
+
+	Java language provides 
+		some interfaces to the dbms vendors.
+		vendors should provide the implementation of those interface
+
+	ex:	the below are the interfaces provided by java language in JDBC API
+		Connection interface
+		Statement 
+		PreparedStatement
+		CallableStatement
+		ResultSet
+
+	lot of interfaces provided by jdbc. the implementations are provided by the dbms vendor like oracle corporation.
+
+	Those java codes are compressed into "jar" file
+	what is a jar file?
+		java archive.		(Nothing much different from .rar	or 	.zip)
+		.jar means compressed java project. means	a folder structure "src","bin" etc are followed
+
+	
+	Download the jar file from the rdbms vendor's website and use it in our project
+
+	if we are using mysql db
+		mysql-connector.jar 
+	if we are using oracle db
+		ojdbc
+	
+	etc etc 
+
+	i am using 
+		mysql-connector-java-5.1.47.jar
+
+
+		Statement
+			is used to execute simple queries which do not require parameters to be passed at runtime
+			ex:		select * from Branch
+					select * from Branch where bid="B00001"		//is also simple because, the condition has constant value. no variable whose value is bound and runtime
+		PreparedStatement
+			is used to execute parameterized queries. 
+			ex:
+					select * from Branch where bid=?
+				//here, the value for that ? is given at runtime. so PreparedStatement
+		CallableStatement
+			is used to call "stored procedures" or "functions" that are present in the database.
+			Mysql do not support plsql. So oracle can be used for this demo
+
+
+
+		execute
+		executeQuery
+		executeUpdate

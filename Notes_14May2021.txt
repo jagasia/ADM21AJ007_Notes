@@ -1,0 +1,32 @@
+1) As soon as we import the project, RED color exclamation is found
+	this is because, of the jar file referenced in the build path.
+	This will work in ICT server. 
+
+	but here, we reference to the jar file in our softwareds folder
+2) lets understand the 
+	database.properties 
+	
+	db name is "harsha"	But in exaM IT will be different. dont change that.
+	select * from menu;
+CREATE TABLE `constructionproject` (
+  `projectId` varchar(100) NOT NULL,
+  `plannedDOStart` date DEFAULT NULL,
+  `typeOfProject` varchar(100) DEFAULT NULL,
+  `structure` varchar(100) DEFAULT NULL,
+  `areaInSqFt` double DEFAULT NULL,
+  `estimatedCostInlac` double DEFAULT NULL,
+  `estimatedTimeInMonths` double DEFAULT NULL,
+  PRIMARY KEY (`projectId`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+3) open the utility file
+	ApplicationUtil.java
+		1) convert String into java.util.Date			SimpleDateFormat
+		2) convert java.util.Date into java.sql.Date		date.getTime	to the constructor of sql date
+		3) method to check if the project start date is in current financial year or not
+			boolean
+				this is already given in skeleton. If it is not given, we can do it in 4 lines of code
+		4) readFile method
+			accepts the file name as parameter
+			use 	FileReader	and BufferedReader to read all lines from the file
+			and store each line as an element of arraylist	<String>

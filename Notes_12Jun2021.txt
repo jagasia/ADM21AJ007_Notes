@@ -1,0 +1,113 @@
+Exception Handler in Spring MVC project
+	what happens when an exception occurs
+	what happens when we throw an exception
+	
+	the user does not like to see the java exception messages
+	we can create a separate page that can be shown when an exception occurs
+
+in this demo:
+	we will write code that may cause exception
+	we intentionally throw an exception
+	we throw an user defined exception
+
+
+	and then look into handling the exception using a page redirection with appropriate message
+
+
+
+
+An application mostly has same login page for all type of users
+
+	username
+	password
+
+based on the above credentials, it will find that i am an admin 	or an user
+
+while signing up, the role can be chosen. But if someone signup as a role holder, somebody should approve
+
+merchant signup should be approved by the admin
+	before that validate if the company exists (in mca portal or not)	Ministry of Company Affairs
+		validate GST number is valid or not		in GST portal
+
+	assuming that an admin will do these background checks and approve.
+
+	approve means, he is changing the status of the user in the table
+
+	when he login, if the status is found "pending", appropriate message will be displayed
+			status is "approved" then login is successful
+
+
+for email otp
+	1) create a gmail account for this project purpose
+	2) login to gmail and "enable less secure app access" in gmail settings (manage your account)
+	3) in java program, write the below code
+	
+
+Login to gmail account and go to "Manage account"
+There search for "Allow less secure apps"
+and change it to "ON".
+
+In the project:
+---------------------------------
+
+add this dependency to pom.xml
+
+<dependency>
+    <groupId>com.sun.mail</groupId>
+    <artifactId>javax.mail</artifactId>
+    <version>1.6.1</version>
+</dependency>
+
+---------------------------------
+below is the code to send email:
+--------------------------------------------------
+	 Properties props = new Properties();
+	        props.put("mail.smtp.host", "true");
+	        props.put("mail.smtp.starttls.enable", "true");
+	        props.put("mail.smtp.host", "smtp.gmail.com");
+	        props.put("mail.smtp.port", "587");
+	        props.put("mail.smtp.auth", "true");
+	        //Establishing a session with required user details
+	        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication("YourGmailId@gmail.com", "xxxxxxxxxx");
+	            }
+	        });
+	        try {
+	            //Creating a Message object to set the email content
+	            MimeMessage msg = new MimeMessage(session);
+	            //Storing the comma seperated values to email addresses
+	            String to = "rjagadeeswaran@yahoo.com";
+	            /*Parsing the String with defualt delimiter as a comma by marking the boolean as true and storing the email
+	            addresses in an array of InternetAddress objects*/
+	            InternetAddress[] address = InternetAddress.parse(to, true);
+	            //Setting the recepients from the address variable
+	            msg.setRecipients(Message.RecipientType.TO, address);
+	            String timeStamp = new SimpleDateFormat("yyyymmdd_hh-mm-ss").format(new Date());
+	            msg.setSubject("Sample Mail : " + timeStamp);
+	            msg.setSentDate(new Date());
+	            msg.setText("Sampel System Generated mail");
+	            msg.setHeader("XPriority", "1");
+	           
+	            Transport.send(msg);
+	            System.out.println("Mail has been sent successfully");
+	        } catch (MessagingException mex) {
+	            System.out.println("Unable to send an email:\n" + mex);
+	        }
+--------------------------------------------------
+
+Password encryption
+
+public String encryptSha1(String password)
+{
+	//String password = "123456";
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashInBytes = md.digest(password.getBytes(StandardCharsets.UTF_8));
+		// bytes to hex
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hashInBytes) {
+            sb.append(String.format("%02x", b));
+        }
+        //System.out.println(sb.toString());
+	return sb.toString();
+}

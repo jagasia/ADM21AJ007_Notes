@@ -1,0 +1,705 @@
+o Static Members and their execution control flow.
+
+what is static?
+	in java, static is different from what you learnt in c, c++
+
+	static sounds like "shared".	Means shared across objects of a class
+	main method is static.
+
+
+public class Main {
+	public static void main(String[] args) {
+		
+	}
+}
+
+Here, the main method belongs a class (unlike c++)
+	If we need to call a method, (in java, a method is always inside the class)
+	we need to create an object of the class and call the method of the class.
+
+	Date dt=new Date();
+	dt.toString();		//here, toString() is a method of Date class. to call this method,
+				//we use the object of Date. 		dt is the object of Date class
+
+	but main method is called by JRE even without any object. So main method must be declared as static
+
+	
+
+1) static methods of a class can be called like
+	classname.methodname
+	we do not need object of the class to call a static method of a class
+2) static variables
+	in java language, a static variable can be created at CLASS LEVEL only. Inside methods, we cannot create static variables (in c, c++ it is possible to create static variables inside methods)
+	static variable of a class belongs to the class AND DOES NOT BELONG TO ANY PARTICULAR INSTANCE OF CLASS
+	instance means object
+	STATIC 	=	OPPOSITE OF INSTANCE
+
+	class Student
+	{
+		int studentId;			//instance variable
+		String name;			//instance variable
+		static String collegeName;	//static variable
+	}
+
+	that means, if we create 2 objects of Student
+	each object has different 
+		studentId
+		name
+	all objects share 1 collegeName
+
+	STATIC MEANS SHARED	(in visual basic language, static is actually "shared")
+
+3) static block
+	{}	this is a block
+	static{	}	this is a static block
+
+	{} this is instance block.	Every time an object of the class is created, the instance block is executed
+
+	
+	static block is executed only once for any number of objects created.
+	static block is executed even before the first line of main method is executed
+
+
+4) static method of a class, cannot access the instance variable of the class.
+	because, it is possible to call a static method, even before any objects are created.
+	But instance variables are available only after an object is created.
+	So static method cannot access instance variable
+
+	vice versa,
+	instance methods can access any variable. (instance or static)
+static:
+	static variable		(class name.static variable name)
+	static method
+	static block
+	
+non static:
+	instance variables	(class level variables)	can be accessed only with object.variable way
+	instance {}
+	instance methods	any method inside a class is instance method (not declared as static)
+
+
+	
+Object Oriented Concepts
+1) what is a class?
+	c language		vs
+	java language
+
+	how we created projects in c language?
+		lot of variable
+		global variable
+		functions
+
+	one thing i was not good in 
+		packing the circuits and wires inside a box
+
+	that box is "class"
+
+	this class boxes, the variables and functions
+	
+	boxing		covering your variables and functions inside a class
+	unboxing	extract the value inside the class
+
+	wrapper classes
+
+	why wrapper?
+	
+if i ask you to display only the characters present in a string
+	char is a primitive types
+	
+	char c;
+	c.somethign		is not possible
+
+	primitive is value type. that means it have only value inside. there are no member functions inside a primitive variable
+
+	so something related to char type can be given as a
+	Character class
+	double is a primitive type		
+	Double is a wrapper class
+	
+	int is primitive
+	Integer		is a wrapper class 	provides methods like toString	parseInt()		valueOf()
+		Integer.parseInt		
+
+	it is not possible to embed lot of methods inside primitive. so a wrapper class is important
+
+
+byte			Byte
+sort			Short
+int 			Integer
+long			Long
+float			Float
+double			Double
+char			Character
+boolean			Boolean
+
+for 8 primitive types, there are 8 wrapper classes.
+	these classes have methods that are related to the corresponding type
+
+
+
+
+to convert string into int
+	Integer.parseInt
+
+Wrapper means, something covers
+
+	boxing
+
+class Integer		//is preferred than int			int is preferred for temp variables loop4
+{
+	int i;
+	//member functions
+	public static int parseInt(String str)
+
+	public static Integer valueOf(String str)
+	
+}
+
+
+how to swap 2 variables?
+
+	x=20;
+	y=30;
+
+swap(int i, int j)	i and j are formal parameters
+{}
+
+swap(x,y)		x and y are actual parameters
+
+	if i and j are swapped, x and y are swapped? NO
+value of x and y are supplied to i and j
+
+
+in java language, primitives are never passed by reference. only they are passed as values
+
+Integer is a reference type
+int is a value type
+
+for all 8 primitive (value) types, there is a reference version called wrapper class
+
+
+class:
+	can contain variables
+	can contain methods
+
+------------------------------
+
+Structure vs Class
+------------------
+	both are used for creating user defined types
+	some times you want to store address
+	address has child elements
+		dno
+		street
+		city
+		pincode
+
+structure is a value type		STRUCTURE is not there in JAVA 	
+class is a reference type.
+
+a=b;		what is copied from b to a?		the value?		or the reference?
+
+if a and b are value types, then value of b is copied to a
+
+if a and b are referece types, then reference of b is copied to a
+
+to understand this,
+first learn to visualize variable and memory structures
+
+lets imagine, you are going to a locker room.
+	looks like a rack
+
+int age=20;
+
+age is a variable
+	this variable is nothing but the label on a locker.
+
+the lable you can see in the key chain also
+
+if you open the locker (labled as "age") what do you see?
+	20
+
+HENCE, int is a value type
+
+String str="hello";
+	str is the  lable of a locker.
+if you open the locker(labeled as "str") what do you see?
+
+what you see is another key !!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	str has a reference (NOT THE VALUE)
+
+
+
+value type vs reference type
+
+value type means?
+	if you see the variable, the value is present
+
+refere type means?
+	if you see the variable, a reference is present
+
+
+
+if you created a variable of primitive type, you are creating a value type	(value types are created in stack)
+if you are created a variable of non primitive type, you are creating a referece type	(ref types are created in heap)
+
+String is peculiar
+because, how we create string variables
+
+String str="hello";
+
+we wonder how is this possible?
+the correct way an object is created is
+
+String str=new String("hello");
+
+this is how we usually create an object of a class
+
+but
+
+String str1=new String("hello");
+String str2=str1;				//this is definitely allowed
+	but what happens? here
+	reference of str1 is copies to str2. 	NOT THE VALUES COPIED. 	
+	that means, 
+
+	str1 and str2 both are referring to same memory locations
+
+
+but DO NOT CONFUSE THIS WITH POINTERS
+
+str2="hi";
+what happends to str1???????	str1 is not affected, because, the above line does not change the value, but reference
+here,
+	"h1" is not value, it is an object of String
+
+str2 also points to memory of "hi"
+
+str1 points still to "hello"
+str2 points to "hi"
+
+
+a==b		what is compared?
+
+== operator compares the value of the operands when the operands are value types
+
+== operator compares the reference of the operands when the operands are reference types
+
+
+
+a==b		what is compared?
+
+when a and b are value types (primitives are value types), then value of a and b are compared
+when a and b are reference types, then the reference of a and b are compared
+
+String is ref type
+Date is ref type
+anything other than 8 primitives are reference type only
+
+so how can i compare the values of ref types,
+	do not use ==
+	use equals() methods
+
+
+String str1=new String("Hello");
+		String str2=new String("Hello");
+//		System.out.println(str1==str2);
+		System.out.println(str1.equals(str2));
+
+whenever you want to compare the value of 2 strings, use equals() method only. DO NOT USE ==
+equals()
+compareTo()
+
+these methods are available for all built in types like
+	String,
+	Date
+
+Task:
+-----
+	Accept a string input from the user.
+	display only the vowels present in the string input.
+Scanner sc=new Scanner(System.in);
+		String input=sc.nextLine();
+		//loop every character to check if it is vowel or not
+		String copy=input.toLowerCase();
+		char[] carr = copy.toCharArray();
+		for(char c : carr)
+		{
+			switch(c)
+			{
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
+				System.out.print(c);
+			break;
+			}
+		}
+
+
+
+
+another solution:
+		Scanner sc=new Scanner(System.in);
+		String input=sc.nextLine();
+		//loop every character to check if it is vowel or not
+		String copy=input.toLowerCase();
+		for(int i=0;i<copy.length();i++)
+		{
+			char c=copy.charAt(i);
+			switch(c)
+			{
+			case 'a':
+			case 'e':
+			case 'i':
+			case 'o':
+			case 'u':
+				System.out.print(c);
+			break;
+			}
+		}
+
+
+TasK
+----
+Identify as many methods present in String class
+	charAt
+	indexOf
+	substring
+	toUpperCase
+	toLowerCase
+	lastIndexOf
+	concat
+	trim
+	copyValueOf
+	split
+	equals
+	compareTo
+	equalsIgnoreCase
+	length
+	replaceAll
+	getChar
+	toCharArray
+	startsWith
+	contains
+	valueOf
+	endsWith
+
+Arrays:
+	int []arr=new int[10];
+	int arr[]=new int[10];		//this is also fine		[]	 left side or right side of array 
+
+	index is between		0 to 9
+
+	arrays have length property also
+	arr.length gives 10 which is the size of the array
+
+
+	sorting an array
+	
+	Arrays.sort(arr);			here, arr is the array which is going to be sorted
+
+
+		int []arr= {10,90,80,20,40,50,30};
+		System.out.println("Before sorting");
+		System.out.println(Arrays.toString(arr));
+		System.out.println("After sorting");
+		Arrays.sort(arr);
+		System.out.println(Arrays.toString(arr));
+
+//descending order
+		Integer []arr= {10,90,80,20,40,50,30};
+		System.out.println("Before sorting");
+		System.out.println(Arrays.toString(arr));
+		System.out.println("After sorting in desc order");
+		Arrays.sort(arr,(a,b)->(b-a));
+		System.out.println(Arrays.toString(arr));
+
+
+
+arrays can be multi dimension
+
+	int [][]arr=new int[10][10];	//100 elements in this array
+		
+	10*10 array can hold 100 elements
+
+	arr[0][0]		is the first element in the array
+	
+	arr[9][9]		is the last element in the array
+
+0,0
+0,1
+0,2
+.
+.
+0,9
+1,0
+1,2
+1,3
+.
+.
+9,9
+
+best way to access each element of an array is using 
+	NESTED FOR LOOP
+
+
+in java, 
+	all the arrays are jagged arrays.
+	jagged means rough surface (not smooth)
+
+means, in java, a multi dimensional array, can have each row of different sized columns
+
+Arrays.toString()		only for single dimensional array
+Arrays.deepToString()		works for multi dimensional array
+
+
+int [][]arr=new int[10][];			//this is allowed
+arr[0] is an array
+arr[0]=new int[10];
+arr[1]=new int[10];
+
+package is used to group classes
+	like a folder is used to group files
+
+every java class is saved as a file
+every package is a separate folder
+
+
+advantage of having a package is
+	avoid name collision
+
+in cts package Employee class 
+int lpu package Employee class
+
+when i create an object of Employee
+
+cts.Employee rama;
+lpu.Employee siva;
+
+this gives a clarity and avoid confusions. Also allows me to create classes in the name preferred
+because if alread a class is there in that name, we dont get problems because, the package is different
+
+class name may be same, but package name may be different.
+
+we can use "default" access specifier to allow access only inside that package
+
+Access specifiers:
+------------------
+
+public
+private
+protected
+default		(no access specifier)	package scope	
+
+class Employee
+{
+	public int employeeId;
+	private float salary;
+	protected String name;
+	String phoneNo;
+}
+
+
+
+public member of a class
+	is accessible in same class
+	is accessible in same package
+	is accessible in different package also
+
+
+protected member of a class
+	is accessible in same class
+	is accessible in same package
+	NOT accessible in different package
+	is accessible from sub classes of same or different packages
+
+default member of a class
+	is accessible in same class
+	is accessible in same package
+	is NOT accessible from other packages
+
+private member of a class
+	is accessible only in the same class
+
+---------------------Example----------
+package cts;
+
+public class Employee {
+	public int employeeId;
+	private float salary;
+	protected String name;
+	String phoneNo;
+
+}
+
+
+
+package cts;
+import cts.Employee;
+
+public class Main2 {
+
+	public static void main(String[] args) {
+		cts.Employee rama=new Employee();
+		rama.employeeId=100;		//public so available
+		//rama.salary=210000;			//private so not available
+		rama.name="Rama";			//protected so available
+		rama.phoneNo="90909090";	//default so available
+	}
+
+}
+
+
+package rps;
+
+import cts.Employee;
+
+public class ContractEmployee extends Employee
+{
+	public void method1()
+	{
+		System.out.println(employeeId);		//public CAN ACCESS
+//		System.out.println(salary);			//private CANNOT access
+		System.out.println(name);			//protected ACCESSIBLE IN SUB CLASS
+//		System.out.println(phoneNo); 		//default CANNOT access
+	}
+}
+
+
+javac -d . Aircraft.java
+	this wil create a folder in the name of the package in the current location (. means current loc)
+	-d 
+		create directory in the name of package specified in the java program
+
+
+the spelling for inherits in java is 
+	extends
+
+class ContractEmployee extends Employee
+
+here, ContractEmployee becomes sub class for Employee
+	because ContractEmployee is inheriting Employee, Employee becomes a Super class
+
+call Employee as super class or Parent class or Base class
+call ContractEmployee as sub class
+
+we do inheritance only when there is a "kind-of" relationship between 2 classes
+
+here,
+	ContractEmployee is a kind of Employee
+
+so we do inheritance
+
+class Employee
+{
+	name
+	Address address;
+	phone
+}
+
+now, address is composite type containing
+	dno
+	street
+	city
+	pincode
+
+so we create a class
+class Address
+{
+	dno
+	street
+	city
+	pincode
+}
+
+the relationship between Employee and Address is not "kind of"
+
+so 
+class Employee extends Address		is meaningless. SO WE SHOULD NOT DO THAT
+
+whenever we have multiple classes, we need to understand the relationships like
+
+1) kind of
+2) part of		or 		has a
+
+kind of means, inheritance
+
+Abstraction:
+------------
+Abstraction is projecting the essential characteristics of a class
+
+we provide public methods to access the variables. that is abstraction
+
+abstraction should not be confused with abstract classes
+
+abstract class is a super class that should be inherited by the sub classes.
+
+Task:
+	create Furniture class that contains
+		name, color		(both are string)
+		methods like
+			acceptDetails
+			displayDetails
+
+	create 2 sub classes for Furniture class
+		i) Chair			(variable noOfLegs)
+		ii) BookShelf			(variabel noOfShelves)
+
+	both the sub classes 
+		should have methods
+			acceptDetails
+			displayDetails
+
+in Main class main method
+	ask the user to choose between chair and book shelf
+	as per user choice,
+	call both the methods
+		acceptDetails		(accepts user input)
+		displayDetails		(display the obtained inputs)
+
+
+
+1: Chair
+2: Book Shelf
+3: Exit
+
+
+super class "Furniture"
+	has methods
+		acceptDetails
+		displayDetails
+
+the sub class "Chair" object
+		was calling acceptDetails of super class method earlier (because, we did not define acceptDetails in Chair class)
+		once we define the acceptDetails method in Chair class itself, then super class method acceptDetails did not execute.
+
+	this is because, 
+		Chair (sub) class overrides the acceptDetails method of Furniture (super) class
+	what is overriding?
+		super class method (acceptDetails) is defined in sub class again 
+	
+	overriding, hides the super class method
+	
+	but in Chair class, i need both super class method and also define sub class behavior
+
+		public void acceptDetails()
+	{
+		super.acceptDetails();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("No of legs:");
+		noOfLegs=sc.nextInt();	
+	}
+	public void displayDetails()
+	{
+		super.displayDetails();
+		System.out.println("No of legs:"+noOfLegs);
+	}
+
+
+	NOTICE that super. acceptDetails()	 will call super class method
+
+By inheriting the super class (furniture), the chair and book shelf (sub ) classes extends the functionality of the super class.
+	the code in super class + code in sub class
+

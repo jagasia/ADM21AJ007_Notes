@@ -1,0 +1,203 @@
+15 rs
+
+300 rs
+
+
+
+1) docker
+	we deployed image into ECS			
+	EKS
+		Elastic Kubernetes Service
+
+2) jar itself uploaded to the aws
+	Elastic Beanstalk
+
+3) rds
+	Relational Database Service
+	mysql 
+		db
+		
+	mysql workbench
+		we access db present at aws
+
+
+
+
+
+1) topics for demo
+2) hands on in tekstac
+3) code challenges
+4) project	next milestone
+5) interview questions
+
+
+Spring Cloud
+	Eureka server and client
+	Feign client
+
+	we deploy spring boot application in eureka server
+		load balancing
+		circuit breaker
+		scalability
+		elastics
+
+	Feign client
+
+	GET
+	POST
+	PUT	
+	DELETE
+
+only GET and POST are used in Spring MVC project
+	<FORM METHOD="GET"
+	<FORM METHOD="POST"
+
+	<FORM METHOD="PUT"
+	<FORM METHOD="DELETE"
+
+SATURDAY
+	GET
+	POST
+	PUT
+	DELETE
+
+	we used in post man
+
+
+spring mvc
+	jsp
+		form action= post 			or 	get
+
+but in controller
+	we call REST API using Feign client
+
+what feign client:
+-------------------
+	http://localhost:8080/branch			GET POST PUT DELETE
+
+this rest api is now converted into an interface
+
+	get
+	post
+	put
+	delete
+
+	all the above becomes proxy methods. so we call these methods and instead of using URL	from MVC
+
+MVC			
+REST api		put delete
+
+Microsoft
+	Azure
+Google
+	GCP
+Amazon
+	AWS
+
+
+
+PAAS
+SAAS
+IAAS
+
+mysql
+	db
+
+jar file deployed in aws
+	IAAS
+	EKS
+
+PAAS
+	java
+
+env	
+	java
+
+
+Flow of Spring MVC
+
+dispatcher servlet
+
+we are using POJO class instead of servlet
+
+any request url will reach Dispatcher servlet
+ds will call the appropriate method (of controller) using that url
+
+
+not boot
+
+spring mvc
+	web.xml			configure the dispatcher servlet 
+				/
+				ds name is "spring"
+	
+	spring-servlet.xml
+				component scan		base package		"controller"
+				prefix		
+				suffix			.jsp
+
+
+spring boot
+	we dont configure dispatcher servlet
+	auto configuration
+
+	convention
+
+	application.properties
+		prefix
+		suffix
+
+
+
+@Controller		vs		@RestController
+
+@RestController
+	@Controller	+	@ResponseBody
+
+
+
+@SpringBootApplication
+	@SpringBootConfiguration	
+		@Configuration
+
+	@EnableAutoConfiguration
+
+BOOT
+	starter dependencies		combines lot of 
+
+	start
+		spring core, context, context-support	
+
+internal apache tomcat server
+
+
+
+OOPS
+
+encapsulation
+	getters setters
+polymorphism
+	overloading		static
+	overriding		late binding 		dynamic polymorphism
+
+			superclass s=new subclass		late binding
+
+inheritance
+	interfaces extends interface
+	class extends class
+	abstract
+	final
+	
+abstraction
+	public method to focus on essential characteristics
+
+
+
+Primary 
+Foreign				ON DELETE (CASCADE, SET NULL, RESTRICT)
+
+		IF you try to delete a row in master table, that has child records in details table, RESTRICT 
+composite
+
+
+multi threading

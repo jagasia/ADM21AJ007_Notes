@@ -1,0 +1,78 @@
+Bootstrap
+	help us by providing 
+		scaffholding
+
+	if you remember whenever i create a jsp program,
+	i would have used
+		jumbotron
+		<div class="row">
+			<div class="col-md-3">
+
+i am able to create the website structure so easily
+
+
+bootstrap column model
+	there are 12 columns in the bootstrap page
+
+	if i want more columns?
+		1	2	3	4	5	6	7	8	9	10	11	12
+		in col1
+	we can put a row that has 12 columns
+
+	if we need 3 columns
+	<div class="col-md-4">
+	<div class="col-md-4">
+	<div class="col-md-4">
+
+	3*4=12
+
+		<div class="col-md-6">
+		<div class="col-md-6">
+
+
+		<div class="col-md-4">
+		<div class="col-md-8">
+
+
+	<div class="col-md-4">
+bootstrap typography:
+	whenever we apply bootstrap in our page,
+	
+	every html element looks slightly different from its usual appearance
+
+<h1>
+
+p
+
+input type=text
+
+
+adv
+	bootstrap is responsive to the device width
+
+	fluidic
+
+
+
+
+CSS
+	class selectors
+
+
+
+nav
+grid
+form element
+	input
+	button
+table
+
+
+Bootstrap is mobile first
+
+
+every text box in separate line
+
+
+what are the three lines added in our <head>
+bootstrap.css					

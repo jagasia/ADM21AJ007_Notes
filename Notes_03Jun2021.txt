@@ -1,0 +1,364 @@
+
+reminder
+	creating maven project in cmd prompt
+
+
+Code quality
+	PMD		Program Mistake Detector
+	Sonar
+		SonarQube	analyse the project and give you the findings
+
+				Bug, code smell, cost
+
+
+in cmd prompt
+	mvn -version
+
+i) M2, 		M2_HOME		these env variables are set
+ii) JAVA_HOME			set to C:\Program Files\Java\jdk1.8.0_281			(not bin)
+
+command "mvn" will work
+
+in eclipse, we right click project, run as maven build		we set some goals
+	those goals can be executed in cmd prompt using
+		mvn command
+
+	ex:
+		mvn clean install
+
+we can also create a maven project in cmd prompt:
+	specify
+		archetype
+		group id
+		artifact id
+	etc
+		using -D switch
+
+
+
+
+
+Introduction to application servers (Tomcat)
+
+when i created a website 
+	HTML
+
+i uploaded in web server
+
+	easy to create html pages and upload them into the web server.
+
+when they asked me to create a form with submit
+
+application form that people can fill data and submit
+
+Servlets
+JSP
+
+
+
+
+
+java program that stores data in the database		YOU KNOW
+java program that retrieves data from the database	YOU KNOW
+
+
+HTML
+Java
+RDBMS SQL
+
+
+what is the gap?
+
+connecting HTML to Java
+	this is where 
+		Servlet
+		JSP
+
+myservlet is going to be an alias for MyServlet.java
+
+Servlets
+
+JSP
+	Java Server Pages
+JSTL
+	JSP Standard Tag Library
+
+
+
+Applets
+	are java programs that run in browser
+
+Javascript has overtaken this applet
+
+Javascript programs come under the category called as "Client side" scripts.
+
+Servlets are also java programs that come under the category called as "Server side" scripts.
+
+but in javascript, why am i not able to access database?
+	because, javascript program runs in the client.
+
+now, you want to know what is 
+	client
+	server
+
+I am accessing Facebook.com from this computer
+	now this computer is called as "client"
+	the pages comes from a remote computer called as "server"
+
+Server
+	stores all the web pages
+
+Client
+	is a computer where browser is used to access the website
+
+if i write a program to display time:
+	which time will be displayed?
+		client's time? or server's time?
+
+	var dt=new Date();		//system time is automatically loaded		(new)
+					//which system?		
+					Java script runs in client computer. So client's time is displayed by js
+
+if write the same code in Servlet
+	Date dt=new Date();		//servlet.
+					//server's time is stored n dt.		because, this servlet program runs in server
+
+Since, servlets run in server, they can access database. 
+	because, database is not present in client. they are present in server
+
+do you think the pictures you upload in facebook are present in every computer you access?
+	no they are stored only in the server	( in db )
+
+
+Server and Client is very clear now
+
+what is a server?
+	Server is a computer that allows us to upload our webpages. So that people from anywhere in the world, use internet to access those web pages.
+
+Web Server
+	simply stores web pages
+	Ex:
+		Personal Web Server
+		Peer Web Server
+
+Web Application Server		(shortly called as App Server)
+	stores web pages
+	also allows programs to run and produce output			(runtime environment)
+
+	Ex:
+		Apache Tomcat Server		(we use this)
+		JBoss
+		Weblogic
+		WebSphere	IBM
+		FrontPage Extension		for ASP.net		microsoft		(IIS)
+		
+
+Apache tomcat server
+	free downloadable
+
+	Apache tomcat server 9.0
+
+
+
+Refactoring
+-----------
+
+	TDD
+		Test Driven Development
+
+		we follow:
+			Fail
+			Pass
+			Refactor
+
+	the test cases are available even before we do coding.
+
+	test case for "sum"
+		2, 3, 		5
+
+	we write a program to fail, pass, then refactor
+
+	Refactor means, modifying the structure of the program without affecting logic.
+
+
+	main method:
+		you did jdbc coding
+
+	later:
+		we refactored it into 
+			Dao class
+
+	
+Project, Employee  and Project Allocation 
+
+	Project	
+	ProjectDAO			code to insert update delete select
+	Employee
+	EmployeeDAO
+
+the relationship between these 2 entities is Many - Many
+
+Hence we need a new entity to store the 
+
+	Project Allocation
+		eid
+		pid
+
+
+
+10 to 20
+		A
+
+21 to 30
+		B
+
+above 31
+		C
+
+
+if(x>=10 && x<=20)
+{
+		A
+}
+else if(x>=21 && x<=30)
+{
+		B
+}
+else if(x>=31 && x<=40)
+{
+		C
+}
+
+
+
+
+0 arg cons are commented
+var names are meaningful
+every if has else
+	with curly braces
+unused import statements are commented
+
+
+	/*double bal=0;
+		if(balance-amount > minimumBalance)
+			return true;
+		else
+			return false;*/
+
+
+
+
+		return balance-amount > minimumBalance;
+
+
+
+
+
+
+	public Account viewAccountByAccountNumber(int accountNumber) {
+		
+		if(accountList.isEmpty()){
+			return null;
+		}
+		else{
+			for(Account a : accountList){
+				if(a.getAccountNumber()==accountNumber){
+					return a;
+				}
+			}
+		return null;	
+	}
+
+
+
+
+
+	public Account viewAccountByAccountNumber(int accountNumber)
+	{
+		Account account=null;
+		for(Account a : accountList)
+		{
+			if(a.getAccountNumber()==accountNumber)
+			{
+				account=a;
+			}
+		}
+		return account;
+	}
+	
+
+
+
+	public Account viewAccountByAccountNumber(int accountNumber)
+	{		
+		for(Account a : accountList)
+		{
+			if(a.getAccountNumber()==accountNumber)
+			{
+				return a;
+			}
+		}
+		return null;
+	}
+
+
+
+	public List<Customer> viewAllCustomer(){
+		if(customerList.isEmpty()){
+			return null;
+		}
+		return customerList;		
+	}
+
+
+
+
+		public List<Customer> viewAllCustomer(){
+			return (customerList.isEmpty())?return null:customerList;
+		}
+
+
+
+
+==============================
+we will learn to 
+	submit a html form to a servlet
+	the servlet will be able to get the user inputs 
+	the servlet can 
+		compute
+		calculate
+		validate
+		store data in db
+		retrieve and return  the data to the browser
+
+
+Servlet is a java program
+
+	A class that extends HttpServlet 
+		is a servlet
+
+	GenericServlet
+		is the super class for HttpServlet
+
+	we are using HttpServlet
+
+we will learn about life cycle of servlets, the container, alias, etc tomoro
+
+today,
+	we learn to do some mathematics operations using servlet
+
+	<form action="MyServlet">
+		Number 1: <input type=number name="no1" /><br/>
+		Number 2: <input type=number name="no2" /><br/>
+		<input type=submit />
+	</form>
+
+
+
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		PrintWriter out = response.getWriter();
+		int no1 = Integer.parseInt(request.getParameter("no1"));
+		int no2 = Integer.parseInt(request.getParameter("no2"));
+		out.print(no1+no2);
+	}

@@ -1,0 +1,672 @@
+Compile time polymorphism:
+	method overloading
+		1) number  of arguments are different
+		2) type of arguments are different
+		3) order of type of arguments are different
+		4) return type can be same or different
+
+	constructor overloading	(rules are same as method overloading)
+
+	sum(2,3)		=5
+	sum("Rama","Krishna")	=RamaKrishna
+
+overloading allows a method to behave differently in different situations (diff args)
+	that is a polymorphism.
+
+While a class is compiled, this polymorphism is visible. so it is compile time polymorphism
+
+class Arithmetic
+{
+	public int sum(int i, int j)
+	{
+		return i+j;
+	}
+	
+	public String sum(String s1, String s2)
+	{
+		return s1+s2;
+	}
+}
+
+
+public class App {
+
+	public static void main(String[] args) {
+		System.out.println("Hello world");
+		Arithmetic a=new Arithmetic();
+		System.out.println(a.sum(2, 3));
+		System.out.println(a.sum("Rama", "Krishna"));
+	}
+
+}
+----------------------------------------------------------
+Runtime polymorphism:		
+------------------------
+class Shape
+{
+	public void calculateArea()
+	{
+		System.out.println("This is a dummy method. because, no formula available");
+	}
+}
+class Circle extends Shape
+{
+	public void calculateArea()
+	{
+		System.out.println("3.14f * radius * radius");
+	}
+}
+class Triangle extends Shape
+{
+	public void calculateArea()
+	{
+		System.out.println("0.5f * breadth * height");
+	}
+}
+public class App2 {
+
+	public static void main(String[] args) {
+		Shape s;
+		s=new Circle();
+		s.calculateArea();
+		
+		s=new Triangle();
+		s.calculateArea();
+	}
+
+}
+
+//
+Shape class, Circle, Triangle
+all these classes when compiled, did not exihibit any polymorphism. 
+But in main method, based on how we allocate memory for Shape, there exihibits a polymorphism.
+so runtime polymorphism or late binding is found
+
+
+
+--------
+Abstract class 		(means very general purpose. or not clear. or incomplete. NOT SPECIFIC)
+	is meant to be a super class		(this is for sub classes to declare common behavior or properties)
+	can contain abstract methods.		(method without body)	and declared as abstract
+	can contain methods with body also.
+	can contain both abstract methods and also concrete method (with body)
+	can contain variables, constants also		(a variable declared as final is a constant in java)
+
+	CANNOT create object of abstract class.
+	Shape s;		//this is not object. 	this is just a reference variable
+//	s=new Shape();		//this is how we create object. HENCE WE CANNOT DO THIS FOR ABSTRACT CLASS
+	Shape s=new Circle();	//this is possible
+	s=new Triangle()	//this is possible
+
+	abstract class cannot be instantiated	(object is the instance of the class)	cannot create object
+
+Constants:
+	variabe name must be in FULL CAPTIAL LETTERS (convention or guideliness)
+		final int STRENGTH=100;			//full capital implies it is constant
+	//constants and variables are opposite to each other. but we say final variable.
+
+
+
+class Employee
+{
+	associateId
+	name
+	dob
+	emailId
+	phoneNo
+}
+
+class ContractEmployee
+
+class FullTimeEmployee
+
+interface provides compatibility
+
+
+public interface Speaker 
+{
+	void playSong();
+}
+
+the methods inside an interface are "public" always. Even when we do not mention it as public
+
+methods inside interface cannot be any other access other than  PUBLIC
+
+there can be only 2 things possible in an interface
+1) public abstract methods		(no need to declare it as abstract. it is abstract)
+2) public static final constants only 	(public static final 		is need not be specifiec)
+
+Java 8 interfaces	(have some new changes. Remind me later)
+
+
+we CANNOT CREATE OBJECT of an interface AT ALL
+so everything should be public
+every data member as static
+
+
+interface
+	class1	(implements interface)	
+	class2	(--do--)
+
+wherever an interface is found,
+	an object of class1 or class2 can be assigned.
+
+interface
+	cannot contain methods with body until Java 1.7
+	in java 1.8, 
+		interfaces can contain methods with body, \			
+			if the method is declared as static	(or)
+			if the method is declared as default
+
+default:
+	default methods in the interface provide default implementation that can be overridden by the implementing classes.
+static:
+	can be called with interface.method	manner
+
+
+Object casting:		a=b	is always supported if a and b are same type. if they are different, casting is reqd
+---------------
+Super class type=sub class type is always allowed. Here it is called as widening. it is implicit casting
+
+sub class type=super class type	is not allowed. here, it is called as narrowing. we need to do casting.
+
+class Employee
+{
+	
+}
+class ContractEmployee extends Employee
+{
+	
+}
+public class App5 {
+
+	public static void main(String[] args) {
+		Employee e=new ContractEmployee();		//implicit casting
+		ContractEmployee ce=(ContractEmployee) e;//explicit casting
+		
+	}
+
+}
+
+
+in modern frameworks like 
+	hibernate
+	spring
+
+they do generate code automatically for our project. those who invented these f/ws do not know about our classes. 
+So their method usually return Object type
+Object 
+	is the super class for any class in java
+so we narrow it to our sub class type using casting
+
+----------------------------------------------------------------
+Abstraction 
+	providing focus on essential characteristics
+Encapsulation
+	hiding unessential characteristics
+
+if we go to a show room to buy a vehicle,
+	the representative may know all the details about a vehicle.
+	But they will project only the features which are relavent to us or interested by us
+
+
+in java,
+	how abstraction and encapsulation are implemented?
+
+a class has
+	non public data members.	(encapsulation)		hiding info from external world
+	public getters and setters	(abstraction)		providing proper way of access to the hidden info
+
+
+-----------------------------------------------
+for every error we see at runtime, there is a class defined in java. thats how it is coming
+
+syntax error or compile time errors are NOT EXCEPTIONs. 
+
+Exception is defined as an abnormal event. Something unexpected in the flow of execution.
+
+Exceptions cause the program to terminate abruptly.
+
+users are not given an opportunity to correct their mistakes.
+
+Exceptions can occur due to many factors:	example:
+	memory insufficient to store result
+	file not found
+	network failure
+	divide by zero
+	value is not compatible to store in a variable
+	array index is out of bounds
+	
+However, correctly we code the program, exceptions can still occur which is beyond the control of program or programmer
+
+we need to handle the exception.
+	Exception handlers are blocks of code that are executed in response to the exception
+
+before we learn about exception handling, lets understand 2 types of exception
+
+	i) checked exception		(compiler checks for these exceptions)
+	ii) unchecked exception		(compiler is unaware of these exceptions. only visible at runtime)
+
+
+Look at the below code:
+
+FileInputStream fis=new FileInputStream("d:\rama.txt");
+
+this line is showing error. 
+	Unhandled exception type FileNotFoundException
+
+FileNotFoundException is an example for checked exception
+	i have 2 choice whenever a checked exception is found.
+		i) surround the code with try-catch blocks
+		ii) declare the method with "throws"
+
+if i use "throws" 
+	then it informs the compiler that this unchecked exception will not be handled by current method. 
+it should be passed to the calling method
+	public void display() throws FileNotFoundException
+	{
+		FileInputStream fis=new FileInputStream("d:\rama.txt");
+	}
+
+another way is:
+		try {
+			FileInputStream fis=new FileInputStream("d:\rama.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+by using try block
+	we are handling the exception
+by using throws clause,
+	we are passing the bug to the calling method
+
+
+
+exception propagation
+	whenever an exception occurs in a method, it can be handled in that method or by the calling method.
+
+in this way, it will propagate to the calling environment
+	when a java program executes query in the database, 	if you see, exception occur in mysql, 
+	the exception propagates to the calling env called java method.
+
+
+try
+{
+}
+can be followed by 
+	catch block or finally block or both
+
+
+try
+{
+}
+finally
+{
+}
+
+try
+{
+}
+catch{
+}
+
+tr{
+}
+catch{
+}
+finally
+{
+}
+
+
+try
+{
+}catch(){}
+catch(){}
+....lot of catch blocks
+finally
+{}
+
+
+
+try block is the guarded sections, inside which any exceptions occurred can be handled by the catch block.
+when exception occurs, it jumps to the catch block. 
+	if there are multiple catch blocks, then based on the type of exception occurred, the catch block is chosen
+
+catch(FileNotFoundException)
+catch(IOException)
+catch(NumberFormatException)
+
+after catch block is completed, it will never return to the try block. try block might be executed incompletely
+
+1
+2
+3	here exception occurred. control jumps to catch block. 	Hence, line #4, #5 are never executed
+4
+5
+
+
+scenario 1:
+	exception did not occur. 	Catch blocks are skipped
+	exception occurred.		try block remaining lines are skipped
+
+some lines are always skipped. So some important operations like closing a file or disconnecting with server, etc
+are done in a "finally" block.
+whenever the control enters a try block, it will definitely execute "finally" block.
+
+
+finally is executed irrespective of an exception occurred or not, handled or not
+
+
+try-catch-finally
+	are the exception handling blocks
+
+throws is used to escape from handling the exception. and passing the responsibility to the calling method.
+
+how to throw exception
+	create an object of an exception class		(any class that derives Exception is an exception class)
+		throw new ArrayIndexOutOfBoundsException("This is thrown by me");
+
+above exception is a pre defined exception and it does not serve exact purpose of our need
+
+so if we need to throw meaningful exceptions, we need to define an exception class
+How to create our own exception class?
+	i) A class that extends Exception is an (user defined) exception class
+	ii) A class that extends any class that is derived from Exception also is an user defined exception class
+
+Now a question comes to our mind?
+	how to create user defined
+		i) checked exception		(means, user cannot escape. they should "throws" or "try-catch"
+		ii) unchecked exception		(not bothered till it is run)
+
+1) checked exception
+	create a class that extends any checked exception then it is user defined checked exception
+	"Exception" is usually (not always) the super class for any checked exception
+
+	FileNotFoundException extends IOException			(both are checked exception)
+
+2) unchecked exception
+	a class that extends unchecked exception is an user defined unchecked exception. compiler does not bother
+
+class InvalidAmountException extends NumberFormatException
+{
+	public InvalidAmountException()
+	{}
+	public InvalidAmountException(String message)
+	{
+		super(message);
+	}
+}
+
+class Bank
+{
+	public void withdraw(int amount) 
+	{
+		if(amount<30000)
+			System.out.println("Remember to collect cash");
+		else
+			throw new InvalidAmountException("amount cannot be greater than 30k");
+	}
+}
+
+public class ExceptionDemo2 {
+
+	public static void main(String[] args) {
+		Bank sbi=new Bank();
+//		try {
+			sbi.withdraw(40000);
+//		} catch (InvalidAmountException e) {
+//			System.out.println(e.getMessage());
+//		}
+	}
+
+}
+--------------------------------------------------------------------
+what is the need for collections!
+	the limitations of arrays. that is where the need for collections
+
+	arrays are fixed length
+		int arr[]=new int[10];
+		arr[0]=20;
+		arr[9]=100;
+
+		arr=new int[20];			// is it possible to change the size of array?
+		//here, arr.length is now 20		(but contents are erased. means, a new array is created)
+
+	arrays are fixed length. They cannot grow as and when required.
+
+	public int[] findPrimeNumbers(int input[])
+	{
+		//write your code here
+		int result[]=new int[100];
+		int j=0;
+		for(int i : input)
+		{
+			//check if i is a prime number? then add it to the result array
+			//if yes,
+			result[j++]=i;
+		}
+	}	
+
+
+
+what is the problem we are facing here?
+	we don't know how many prime numbers are present in the given array
+
+	
+
+		int result[]=new int[100];		this is the problem. we cannot predict the size of req
+
+Collections
+	are data structures which can grow or shrink as and when required
+
+	we can add elements and then the collection can grow
+	we can remove elements and then the collection shrink
+
+Collections are classes or interfaces defined in java.util package in java language
+	example:
+		LinkedList
+		HashSet
+		TreeMap
+
+	etc are some of the collection classes.
+EaCH class has a different approach in the way the elements are added or accessed or searched or sorted
+
+in collections, there are some categories:
+1) List
+2) Set
+3) Map	(is not a collection but an application of collection)
+
+in fact, 
+	List, Set and Map are interfaces	present in java.util
+
+List interface is implemented by few classes
+	LinkedList
+	ArrayList	(most popularly used. similar to arrays, they have index, they are contigeous but can grow or shrink dynamically)
+
+		we can add elements without having a fixed length. we dont even need to know the size initially
+
+Set
+	HashSet
+	TreeSet
+	LinkedHashSet
+
+Map
+	HashMap
+	TreeMap
+	LinkedHashMap
+
+lets see the clear difference between these categories
+
+List
+	maintains the order in which the elements are added
+	List allows duplicate elements
+
+Set
+	popularly called as unordered collection because, the order in which we add may not be maintained
+	REJECTS duplicate entries		(will not give error. but it will reject that attempt)
+	HashSet	- the order of the elements is based on hashCode method 
+	TreeSet	- the elements are maintained in sorted manner	(usually ascending order)
+	LinkedHashSet	- the elements are maintained in the order in which they are added (similar to List)
+
+
+Map
+	2 dimensional		(key - value) pair
+
+	while adding entries, we provide 		key, value
+	while retrieving, we provide key, and get value
+
+
+
+	
+Demo1:
+
+		ArrayList<Integer> marks=new ArrayList<>();
+		marks.add(90);
+		marks.add(100);
+		marks.add(50);
+		marks.add(60);
+		//we can add lot of elements but no need to specify the size
+		System.out.println(marks);
+
+output:
+	[90, 100, 50, 60]
+
+notice that the order of the elements is same as the order in which they are added
+
+
+Demo2:
+		HashSet<Integer> marks=new HashSet<>();
+		marks.add(90);
+		marks.add(100);
+		marks.add(50);
+		marks.add(60);
+		//we can add lot of elements but no need to specirfy the size
+		System.out.println(marks);
+
+output:
+	[50, 100, 90, 60]
+
+marks.remove(50);
+
+
+1) ArrayList		has index
+2) LinkedList		has no index, the elements in random locations. 
+3) HashSet		the order is based on hasCode method. DOES NOT ALLOW DUPLICATES
+4) TreeSet
+5) LinkedHashSet
+6) HashMap
+7) TreeMap
+8) LinkedHashMap
+
+
+
+Iterator
+	hasNext()		returns true if anymore element is present to iterator.	false otherwise
+	next()			returns the element present next
+	remove()		removes the current element
+
+
+since there is only next method, we can traverse in the forward direction only.
+
+List category collections can be traversed in reverse order also using "ListIterator"
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
+
+public class Main1 {
+
+	public static void main(String[] args) {
+		ArrayList<Integer> marks=new ArrayList<>();
+		marks.add(90);
+		marks.add(100);
+		marks.add(50);
+		marks.add(60);
+		//we can add lot of elements but no need to specirfy the size
+//		for(Integer x:marks)
+//			System.out.println(x);
+		
+//		for(int i=0;i<marks.size();i++)
+//			System.out.println(marks.get(i));
+		
+		//use iterators for accessing all the elements
+//		Iterator<Integer> it = marks.iterator();
+		ListIterator<Integer> it = marks.listIterator();
+		while(it.hasNext())
+		{
+			Integer x = it.next();
+			System.out.println(x +" is the current value");
+		}
+		System.out.println("Now, traversing in reverse direction");
+		while(it.hasPrevious())
+		{
+			Integer x = it.previous();
+			System.out.println(x);
+		}
+	}
+
+}
+
+
+ListIterators work only for List category class like
+	ArrayList
+	LinkedList
+
+they will not work for Set category at all. In fact, set is rigid. once the elements are added, their order cannot be changed. They can be assigned to List and sorting or changing order is possible
+
+
+ArrayList<Integer> marks=new ArrayList<>();
+		marks.add(90);
+		marks.add(100);
+		marks.add(50);
+		marks.add(60);
+		//sort the collection 
+		Collections.sort(marks);
+		for(Integer x:marks)
+			System.out.println(x);
+
+The collection sort method will work only for List category. WILL NOT WORK FOR SET CATEGORY. 
+
+
+Legacy classes	(means old)	in first version of java
+	Vector
+	Hashtable
+
+	these are legacy classes. Their naming conventions were not following modern collections
+the modern collections have atleast 2 portion in their name
+	first is the algorithm and last portion is the category of collection
+
+
+
+		List<Employee> employeeList=new ArrayList<>();
+		employeeList.add(new Employee(1, "Ram", "Kumar", 1234567.0));
+		employeeList.add(new Employee(2, "Siva", "Kumar", 84383.0));
+		employeeList.add(new Employee(3, "Rama", "Krishna", 747474.0));
+		employeeList.add(new Employee(4, "Siva", "Raja", 383838.0));
+		employeeList.add(new Employee(5, "Rama", "Nathan", 199111.0));
+		employeeList.add(new Employee(6, "John", "Kennedy", 1024567.0));
+		
+		for(Employee e:employeeList)
+			System.out.println(e);
+
+
+
+HashSet
+	identifies duplicates
+	and decides the order
+	using 
+		equals()
+		hashCode()
+
+	so these two methods must be implemented by our entity class
+
+HashSet
+	rejects duplicate entries
+	
+
+HashMap
+	updates when duplicate key is entered. 
+	if key is new, entry is put into the map
+	if key is already found, value is updated.

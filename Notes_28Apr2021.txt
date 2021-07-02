@@ -1,0 +1,457 @@
+Lets see how to create a java project in Eclipse.
+	You may download eclipse / intelliJ / Spring tool suite
+	anything is fine. But i would recomment "Spring tool suite"	(this is also eclipse)
+
+free IDE
+	Eclipse is fine
+Choose the workspace.
+	what is workspace?
+		it is the default location where your project folders will be created by eclipse
+
+	
+iN Eclipse,
+	there are lot of Project types.
+	i) Java Project
+		this is the project type we choose to create stand alone applications.
+		console applications or java project
+		
+
+Guideliness to create a class
+1) class name should be a Noun
+2) class name should begin with Captial letter.
+3) If multiple words are used, each word first letter in upper case.
+4) The class file name should preferrably be same as the class name.
+	if there are multiple classes in one file, then only 1 class can be public. The file name should be that one.	
+	it is advisable to have only 1 class in every .java file. (that is recommended)
+
+
+in eclipse, 
+	use ctrl+space to get help or auto completion of code
+
+	syso
+	sout
+		use ctrl+space to automatically generate
+		System.out.println();		//	ln means new line at the end
+		System.out.print();
+
+To run a program in eclipse,
+	ctrl+F11
+
+
+
+Casting:
+--------
+	when a=b
+	b is assigned to a.
+	when a and b are same type, there is no issues in that assignment.
+
+	but when a and b are different type?????	we need to something called, "casting" or "conversion"
+	when to do casting?
+	-------------------
+		when a and b are same category of types	(integral types or floating point types)
+	
+long l=20;
+		int i=20;
+//		i=l;		//error. why? long is bigger than int
+		i=(int) l;	//ok. because, casting is done
+		
+		l=i;		//no issues from jdk 1.5 version onwards.
+		//why l=i is allowed? because, l is bigger enough to sotre int
+		//you are not losing any precision here. thats y
+		
+				
+
+	Notice that, whenever we do casting, the type in bracket is always same as left side type.
+
+
+
+float f=12.36f;
+		double d=12.36;
+		
+//		f=d;		//problem
+		//double is bigger to fit in a float. You loose precision
+		f=(float) d;	//ok now we have done casting
+		
+		d=f;		//no issues, because, double is larger enouggh to fit a float
+		
+
+Both cases, you understand that,
+	widening is implicit	(automatic casting)
+	narrowing is to be done explicitly (casting)
+
+	d=f;			//here, implicit casting happened. 	auto casting
+
+-------------
+When to do conversion.
+	when we assign values which are not of same category of types.	
+	example, String into number
+	we need to do conversion
+
+
+		String str="20";
+//		int i=str;		//problem
+		//they are not compatible to assign
+		//lets do conversion
+		
+		int i=Integer.parseInt(str);//fine. done a conversion
+		System.out.println(i); 			
+
+	Integer is a class.
+	parseInt is a method.		we can call the method of a class if the method is static method.
+
+
+123
+	is a number
+	is three number
+	is 3 characters
+	is a string
+
+
+
+if we try to convert char into int
+	look at the peculiar situations
+
+		char c='0';	//anyone tell me the ascii value of A		65
+		int i=c;
+		System.out.println(i);		//prints ascii value of "0"	IE		48
+
+LETS SEE conversions of various types
+	float f=0.0f;
+		String str="12.36";
+		//convert string into float
+//		f=str;		//error
+		f=Float.parseFloat(str);
+		System.out.println(f);
+
+
+
+double d=0.0;
+		String str="1.25";
+//		d=str;	//error
+		d=Double.parseDouble(str);
+		System.out.println(d);
+
+
+
+String str="true";
+//		boolean b=str;		//error
+		boolean b=Boolean.parseBoolean(str);
+		System.out.println(b);
+
+
+
+char c='\0';
+		String str="bangladesh";
+//		c=str;			//error
+		c=str.charAt(0);
+		System.out.println(c);
+
+
+
+
+
+int i=20;
+if(i==0)
+	true
+else
+	false
+
+
+int i=20;
+		if((i=0)==0)
+			System.out.println("true");
+		else
+			System.out.println("false");
+
+
+
+if condition
+	true part
+	else part
+in these parts, only one line means, no need of {}
+
+two lines, then definitely use {}
+	if not used, only 1 line becomes the part of the true or else parts
+
+
+
+		int i=10;
+		if(i==0)
+			i=1;
+			i++;
+		else			//error	 "else" without "if"
+			i+=2;
+		System.out.println(i);
+
+
+
+nested if conditions
+	if()
+	{
+		if()
+		
+	}
+	else
+	{
+		if()
+	}
+
+
+sometimes, multiple conditions in if
+	if(a>b && a>c)
+		a is higher
+	else if(b>a && b>c)
+		b is higher
+	else
+		c is higher
+
+
+
+
+&&		and operator
+|| 		or operator
+!		not operator
+
+
+
+
+
+
+
+
+
+Scanner sc=new Scanner(System.in);
+		char input;
+		input=sc.next().charAt(0);
+		switch(input)
+		{
+		case 'a':
+		case 'e':
+		case 'i':
+		case 'o':
+		case 'u':
+			System.out.println("Vowel");
+			break;
+		default:
+			System.out.println("Not vowel");
+		}
+
+
+
+
+
+BREAK:
+	use break only in 
+		switch case
+		loops	
+
+	it will skip below lines and come out of the current block	{}
+
+
+
+1) IF
+	IF ELSE
+	IF ELSE IF ELSE IF ELSE
+	NESTED IF
+	IF WITH MULTIPLE CONDITIONS
+
+2) SWITCH CASE
+
+3) WHILE LOOP
+
+4) DO WHILE LOOP
+
+5) FOR LOOP
+
+6) FOR EACH LOOP
+
+
+
+
+	//display first 10 numbers
+		int i=1;
+		while(i<=10)
+		{
+			System.out.println(i);
+			i++;
+		}
+		System.out.println("after coming out of looop, i is "+i);
+
+
+		//display first 10 numbers
+		int i=1;
+		do
+		{
+			System.out.println(i);
+			i++;
+		}while(i<=10);
+		System.out.println("after coming out of looop, i is "+i);
+
+
+use do while loop when the loop must be executed atleast once. Second time onwards based on conditon
+
+for(int i=1;i<=10;i++)
+		{
+			System.out.println(i);
+		}
+
+the variable i is declared inside the for loop. so it cannot be used outside the loop.
+
+
+the loop variables, are usually declared as short variable names like i,k,l, etc
+
+other variables whose scope is high, they are named meaningfully.
+
+int age;
+String companyName;
+
+VARIABLE NAMING CONVENTIONS:
+1) the variable name must be starting with small letter.
+2) if multiple words are there, every first letter of the word in caps.	(EXCEPT first word first letter)
+	camelCase
+3) noun, meaningful and expresses the purpose of the variable
+
+
+method	(also called as functions) NAMING CONVENTIONS:
+1) method name must sound like
+	doThis()
+	example:
+		calculateSimpleInterest()
+		displayDetails()
+		
+	it should be combination of "verb"+"noun"
+
+2) first letter small letter. Every next word first letter in upper case
+
+
+Displaying characters:
+how to use printf
+
+
+		Scanner sc=new Scanner(System.in);
+		int employeeId=sc.nextInt();
+		String firstName=sc.next();
+		String lastName=sc.next();
+		System.out.printf("The employee Id is %d, first Name is %s and the last Name is %s", employeeId, firstName, lastName);
+
+
+Scanner methods:
+	nextInt()		accepts an int
+	nextFloat()
+	nextDouble()
+	nextLong()
+	next()			accepts a String
+
+all these methods accept the input until a delimiter is found.
+
+	what is this delimiter means?		
+		space	tab	newline			(any of these can be the delimiter)
+
+	so if we need to accept a String input like "Rama Krishna"
+
+	nextLine()		can accept strings that contain space, tab.		Until a new line char is found	until enter is pressed
+
+
+1) Problem:
+	nextLine()	that comes after a next() or nextInt() or nextFloat()....
+	retrieves the new line char
+
+Solution:
+	i) use different scanner for "nextLine()" alone
+	ii) or, check if the nextLine() got "" input and get again
+
+
+
+
+
+		Scanner sc=new Scanner(System.in);
+		Scanner sc1=new Scanner(System.in);
+		int employeeId=sc.nextInt();
+		String firstName=sc1.nextLine();
+		String lastName=sc1.nextLine();
+		System.out.printf("The employee Id is %d, first Name is %s and the last Name is %s", employeeId, firstName, lastName);
+
+------------------another solution
+
+		Scanner sc=new Scanner(System.in);
+		int employeeId=sc.nextInt();
+		String firstName=sc.nextLine();
+		if(firstName.equals(""))
+			firstName=sc.nextLine();
+		String lastName=sc.nextLine();
+		System.out.printf("The employee Id is %d, first Name is %s and the last Name is %s", employeeId, firstName, lastName);
+
+
+
+nextInt()		a number is capture, but 
+nextLine()		enter key is captured by nextLine()
+
+so whenever a nextLine() comes after a next() or nextInt() methods, we find that nextLine() captures ""
+
+
+
+1) try to get 2 inputs from the user
+	1) a number
+	2) a String 	like "Rama Krishna"		(since there is a space between the input string)
+	you cannot use next()	but use nextLine() method
+
+
+
+
+System.out.printf
+System.out.format
+both of them are same,
+
+but sometimes, you dont want to print the output. rather, store the formatted output and return as a function value
+
+c=sum(a,b);
+
+a function can return a String also. that string should be formatted.
+
+String result=String.format("%s",x);
+
+
+
+int arr[10];		//what is the size of this array?
+
+the above is allowed in c, c++
+but not allowd in Java
+
+in java the same array can be declared as follows:
+
+
+		int arr[];			//declaration
+		arr=new int[10];	//sizing
+		//we can do this in same line also
+		
+		int arr1[]=new int[10];			//this is also correct
+
+
+
+System.out.println(Arrays.toString(arr));		//to display elements of array
+
+
+arr is the array name
+	arr[0]		is the first element of the array
+
+	arr[9] 		is the last element		if there are 10 elements in the array
+
+arr.length 		returns the length of the array
+
+
+int arr[]= {33,10,90,100,89,40};
+		System.out.println(Arrays.toString(arr));
+		System.out.println(arr.length);
+		//display all elements of array using for loop
+		for(int i=0;i<arr.length;i++)
+		{
+			System.out.println(arr[i]);
+		}
+
+
+
+		for(int x:arr)			//x must be declared in this for loop only. cannot be used outside
+		{
+			System.out.println(x);
+		}
+

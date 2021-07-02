@@ -1,0 +1,115 @@
+Spring framework
+	spring core
+
+1) xml based configuration
+	ctx=new ClasspathXMLApplicationContext("bean.xml");		//in tekstac  "applicationConfig.xml"
+2) annotation based configuration
+	
+so far, we are doing configuration using XML
+
+
+while using annotation config
+	how we define beans?
+		we use @Component
+
+	now, we need to specify the package that contains the component classes.
+	 AnnotationConfigApplicationContext ctx=new AnnotationConfigApplicationContext(); 
+	//we have not created a config class in this project,       
+        ctx.scan("com.cts");
+        ctx.refresh();
+       
+	
+
+Next example,
+	i will copy same
+		Car
+		Audio
+		Sony
+		Pioneer
+
+	but i will create a config class that specifies the base package location to scan
+	
+
+Autowire
+---------
+	using xml config
+	using annotation
+
+in xml config:
+______________
+	<bean name="car" class="com.cts.aj007.dem_2.Car" autowire="byName">
+
+	autowire
+		byName		(the variable name is used to find the implementation)	
+			ex:
+				Audio sony;			//we choose sony implementation of Audio
+				Audio pioneer;
+
+				there are 2 implementation of Audio interface.	
+		byType
+				when there is only 1 implementation available for an interface
+				Audio audio;			//Sony OR Pioneer either one only is available. 
+						NO CONFUSTION Then only byType is possible
+
+	
+in annotation
+-------------------
+	
+	@Component
+	public class Car {
+		private String name;
+		private String brand;
+	
+		@Autowired
+		private Audio pioneer;
+
+	}
+
+		here, @Autowired annotation is used to automatically inject the dependency
+		pioneer or sony		(the variable name is matching with the component "name")
+	@Component("pioneer")
+	public class Pioneer implements Audio{
+	
+
+	@Autowired annotation by default works "byName"
+
+
+
+<constructor-arg>		here, IOC container will create bean instance using arg cons
+<property>			here, IOC container will create bean instance using no arg cons and use setters to inject the properties.
+
+
+class
+	String 
+	Date		//here, most of the programmers feel difficult to inject values in XML file
+
+
+
+
+
+
+	SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+
+	sdf.parse(str);
+
+
+
+<property>
+	<list>
+	</list>
+</property>
+
+<property>
+	<set>
+	</set>
+</property>
+
+<property>
+	<map>
+		<entry key="" value="" />
+		<entry key="" value="" />
+		<entry key="" value="" />
+	</map>
+</property>
+
+

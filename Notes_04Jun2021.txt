@@ -1,0 +1,259 @@
+Servlets and JSP
+----------------
+	Whenever we create a web application in java
+	server side/ back end developement using java
+
+	Servlets are unavoidable
+		Spring MVC
+		Spring boot
+			all these f/w use dispatcher servlet (which is behind the scenes)
+
+
+
+Servlet and JSP 	
+	both are same
+
+	JSP is translated into Servlet during execution
+
+	when we write more java code and less HTML code,
+		use Servlet
+
+	when we write more HTML code and less java code,
+		use JSP
+
+both are called as "web component"s
+	they are executed by a special JVM called as web container (present in Apache Tomcat server)
+
+	
+IF YOU remember yesterday's code
+	public class MyServlet extends HttpServlet {
+
+
+	we created a class called MyServlet
+		but we did not create an object of this class
+
+	from HTML form, we submitted the form to a servlet.
+
+	the method 			doGet was called
+
+	but who created the object of MyServlet?		I didn;t create
+
+	the web container creates NOT only 1 object, but several objects initially itself.
+
+		Pool of instance or
+		Instance pool
+
+	web container 
+		is a special JVM
+		provides runtime for our servlets (java code) to execute
+		provides generic services.		
+
+	we need to code only for application specific services
+
+
+our class 
+	extends 	HttpServlet
+
+	HttpServlet extends GenericServlet		this class has
+
+		doGet
+		doPost
+
+		init
+		destroy
+
+
+these methods are overridden by the sub class 
+	HttpServlet
+
+
+the life cycle of a servlet:
+	i) init			only once
+	ii) service		every time a form is submitted to the servlet.	(or directly a servlet is called)
+	iii) destroy		only once
+
+
+http://localhost:8080/demo-2/MyServlet?no1=2&no2=3
+http://localhost:8080/demo-2/MyServlet?no1=22&no2=33
+?no1=2&no2=3
+	key=value&key2=value2&key3=value3		aND So on
+
+
+this is called 
+	URL rewriting
+	or
+	query string
+
+
+
+
+init
+	the init method does not execute when a servlet is called. it is called even before that.
+	when the servlet is deployed
+	
+	deployed means?		the servlet is a program in our local computer. it is moved into the apache tomcat server's virtual directory (this is called deployment)
+
+
+whenever we run a project, 
+	first it gets deployed
+
+
+container creates several instances of a servlet
+	every time a service comes, container may give us any instance available
+
+
+
+service method
+	will choose 
+		doGet
+		or
+		doPost
+
+	according to the request type
+
+
+
+doGet vs doPost
+
+	doGet method can be invoked by typing the url in the browser itself
+
+	doPost method cannot be invoked by typing the url
+
+	only when
+		<form method="POST"
+
+	ONLY then the doPost method is invoked
+
+	doGet method can be invoked 
+		<form method="GET"			method is optional. if we do not mention method, then it is GET Method only
+
+	GET method is not advicable for secure application. because, 
+		http://localhost:8080/demo-2/MyServlet?no1=2&no2=3
+	the address bar reveals the values entered.
+		what happens, if login page is submitted using method="GET" 
+
+	also, 
+		GET method cannot be used when we submit a form that uploads large objects like image or video
+
+	bcos the address bar can allow only 256 characters
+
+while practising programs, we use GET method so that we can easily edit the address bar to test our servlet.
+	Later we can change to post method
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+	service methods take 2 parameters
+		HttpServletRequest
+		HttpServletResponse
+
+	request is used to get input
+	response is used to give output
+
+request.getParameter("no1");		this returns the value present in "no1"
+
+in html
+	<select>
+	<input type=radio>
+	<input type=checkbox>
+
+	multiple
+	<input type=submit 
+
+
+Demo:
+in html
+	<select>
+	<input type=radio>
+	<input type=checkbox>
+
+	multiple
+	<input type=submit 
+
+	how these values can be accepted by servlet?
+
+	
+
+	<form action="MyServlet">			this is not nice because, url should be in lower case
+
+	<form action="ms">				this is easy. but how?
+
+
+response.setContentType("text/html");
+
+
+
+		response.setContentType("text/html");				//MIME type	was text/plain
+		String country=request.getParameter("countries");
+		String gender=request.getParameter("gender");
+		//multiple check boxes can be selecte. So we need an array of strings
+		String[] interests = request.getParameterValues("interests");
+		PrintWriter out = response.getWriter();
+		out.print(country+"<br/>");
+		out.print(gender+"<br/>");
+		out.print(Arrays.toString(interests));
+
+
+
+
+
+
+<form action=maths>
+	Number 1: <input type=number name=no1 /><br/>
+	Number 2: <input type=number name=no2 /><br/>
+	<input type=submit name=btn value=Add />
+	<input type=submit name=btn value=Subtract />
+	<input type=submit name=btn value=Multiply />
+	<input type=submit name=btn value=Divide />
+</form>
+
+
+
+
+	int no1=Integer.parseInt(request.getParameter("no1"));
+		int no2=Integer.parseInt(request.getParameter("no2"));
+		String btn=request.getParameter("btn");
+		float result=0.0f;
+		switch(btn)
+		{
+		case "Add":
+			result=no1+no2;
+			break;
+		case "Subtract":
+			result=no1-no2;
+			break;
+		case "Multiply":
+			result=no1*no2;
+			break;
+		case "Divide":
+			result=no1/no2;
+			break;
+		}
+		PrintWriter out = response.getWriter();
+		out.println(result);
+
+
+Task:
+	Create a html form to accept the inputs
+		bid
+		bname
+		bcity
+
+	the servlet		(BranchServlet)
+		should get these inputs and 
+		create a Branch  object
+
+	then call the BranchDao method		to add a branch in the database table.
+
+
+Steps:
+	1) table in db		(already there)
+	2) Branch.java
+		bid, bname, bcity
+	3) BranchDao.java					mysql-connector.jar		file	
+								add this jar to the (in core java project, add jars to build path).					But in dynamic web project, add jars to the "WEB-INF/lib" folder
+		create, read, update, delete
+	4) branch.html
+	5) BranchServlet.java
+		
+

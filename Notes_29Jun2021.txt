@@ -1,0 +1,47 @@
+
+Git
+	versioning tool	
+	that allows multiple users to colloborate
+	
+	projects can be pushed into a repository
+	can pull them from their systems
+
+github.com
+	create an account. Sign up
+	create a repository
+	copy the commands and keep it
+
+install git in your computer
+	https://git-scm.com/download/win
+
+git --version
+	
+set up global variable
+	git config --global user.name "yourGitUserName"
+	git config --global user.email "yourGitEmail"
+
+	(check c:\users\yourname\.gitconfig 		(or)
+
+	git config --list --show-origin
+
+
+
+
+
+
+. means all files and folders in current location
+
+
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/jagasia/rajesh.git
+git push -u origin main
+
+
+
+
+
+
+1) 

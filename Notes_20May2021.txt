@@ -1,0 +1,233 @@
+Maven
+	create a maven project
+Spring core
+-------------
+	what is spring?
+		Java had a framework calleed EJB		Enterprise Java Beans
+
+		what is EJB?
+		First what is Java Bean?
+		
+		A java bean is any java code that can be reused. like a component developed in java is a java bean.
+		there are some specifications followed to create java beans.
+		like
+			private or non public data members
+			no arg constructor
+			all arg constructor
+			getters, setters
+
+		
+		Entity classes are also same.
+		
+		whenever we create a project, there are
+			generic services
+			application specific services
+
+		generic services are common for many projects
+			like 
+				scalability	
+				security
+				persistence
+				transaction management
+		application specific service?
+				our logic, code	(ex: to validate login, to calculate etc)
+		scalability is the ability to adapt to growing or reducing needs.
+
+		suppose, if an user access Facebook website. an object is created to validate his login.
+
+		if 100 users access?		100 objects are created to validate each user
+		in this way, increasing number of users, will increase the number of objects being create.
+	
+		ability to adapt or handle this increasing requirement is called scalability.	increasing or decreasing needs.	if i need more, i subscribe more. i need less, i subscribe less. this is scalability
+
+		when millions of users access our application, we need scalability.
+		that was provided by EJB.		Now u understand the difference between java bean and ejb
+
+		java bean is just a java class.		ejb is lot of services on java class.
+
+
+		Frameworks provide generic services, so that we focus on application specific services.
+		one such framework is called EJB.
+		EJB was very complicated so programmers felt like WINTER
+		so they required another modern framework which they will feel like SPRING
+
+		Spring framework made the life of EJB programmers easy.
+
+		If we create one object for an user logging in?	
+		then for million users, we are actually creating million objects.
+		this is going to affect the scalability of the application.
+	
+		So we are not going to create objects of java beans any more.
+			instead, we are going to obtain an object from the spring framework. this way, spring will take care of the scalability
+
+
+		from:
+				EmployeeDao edao=new EmployeDao();
+
+		to:
+				EmployeeDao edao=(EmployeeDao)ctx.getBean("edao");
+
+
+Spring f/w allows Dependency Injection
+
+class EmployeeController
+{
+	private EmployeeDao edao;
+	//constructors and setters	for DI	(Dependency Injection)
+	public void add(Employee employee)
+	{
+		edao.add(employee);		//ERROR because, edao is not instantiatied
+	}
+}
+
+
+LOOK AT THE ABOVE CODE:
+	Can we say that 
+		EmployeeController
+			is dependent on EmployeeDao
+
+
+
+
+
+class Car
+{
+	Audio a=new Sony();			//this is rigid. we are not giving customer a choice
+}
+
+
+
+class Car
+{
+	Audio a;			//dependency
+	public Car(Audio a)		//we are injecting the dependency into the car
+	{
+		this.a=a;
+	}
+}
+	//this is better approach
+
+	Car swift=new Car(new Sony());
+	Car swift=new Car(new Pioneer());
+
+the Car class allows users to inject either "Sony" or "Pioneer" or any type of audio.
+
+This is called as Dependency Injection.
+
+The above is an example for "Constructor" based Dependency Injection.
+
+class Car
+{
+	Audio audio;			//dependency
+
+	public Car(Audio audio)		//we are injecting the dependency into the car
+	{
+		this.audio=audio;
+	}
+
+	public void setAudio(Audio audio)	//this is called as "setter" based Injection
+	{
+		this.audio=audio
+	}
+}
+
+
+--------------------------------
+Inversion Of Control			(IOC)
+	spring fw allows IOC
+		means, the user can decide which implementation they want
+
+	the dependency is not tightly coupled to a specific implementation
+
+in above Car example,
+	what is Audio?		it is an interface
+
+	then, the user have a choice of implementation
+
+	which implementation they want, is not decided by the Car class but the user.
+
+how DI and IOC becomes 2 different features?
+
+	Spring has IOC container
+		i was tellling
+
+		Generic Services		are provided by Container
+		Application specific Services	are provided by the programmer
+
+
+	f/w provides us a container
+		Container is a special JVM
+		it provides lot of (generic) services
+
+	one such service is IOC
+		so the container in spring is called as IOC container.
+		IOC container is going to create necessary number of objects. 
+		we are not going to create objects by ourselves. we get objects from IOC container
+
+		ctx.getBean("edao");		we are actually getting the instance from spring IOC container
+
+
+Demo:
+	Create a simple java project that obtains object of a bean from IOC container
+
+steps:
+1) create a maven project
+	quickstart
+2) in pom.xml
+	add dependencies for spring core framework
+3) create a simple java class 	POJO		Plain Old Java Objects		
+4) in App.java
+	main method,
+		we are going to get instance of that bean using 		getBean()	method
+
+
+
+Spring core f/w allows us to define the beans in xml configuration file.
+	and allows us to get instance from spring IOC container	(instead of creating object of the bean)
+
+i am going to create 
+	bean.xml file
+		and configure the bean using <bean> tag
+
+
+where to create this bean.xml file?
+	always create directly in src		(src/main/java)		not inside any package
+
+
+
+
+
+ApplicationContext ctx=new ClassPathXmlApplicationContext("bean.xml");
+        Employee x=(Employee) ctx.getBean("emp1");
+        Employee y=(Employee) ctx.getBean("emp1");
+        Employee z=(Employee) ctx.getBean("emp1");
+        x.setFirstName("X");
+        y.setFirstName("Y");
+        z.setFirstName("Z");
+        System.out.println(x.getFirstName());
+
+By default, 
+	the spring loading is "Singleton"
+	that means, in above example, I obtained, only 1 instance in 3 reference variables. changing 1 object means all are updated.
+
+We can change this spring loading from "Singleton" to "Prototype"
+
+understand the difference between scope of a bean
+	Singleton		(default)
+	Prototype
+
+	<bean name="emp1" class="com.cts.aj007.spring_demo_1.entity.Employee" scope="prototype">
+	<bean name="emp1" class="com.cts.aj007.spring_demo_1.entity.Employee" scope="singleton">
+
+
+
+
+next demo would  be for autowiring
+before that
+	the bean configuration can be done in 2 ways:
+		i) using xml file
+			(we did it now)
+		ii) using annotations
+			
+
+poor signal........

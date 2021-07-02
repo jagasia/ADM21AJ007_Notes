@@ -1,0 +1,291 @@
+Topics to discuss now till 9:42
+----------------------------------
+HTML + Javascript
+	truyum	(if you are able to sove that case study, it is evident you have learnt javascript to some extent)
+
+
+it is possible to create a file with extension "js"
+	jag.js
+
+this file is a javascript file
+	this file can contain lot of js code, functions, variables, etc
+	usually we can write javascript code inside functions
+
+we write js code inside	
+1) <script> tag in head of HTML
+2) <script> tag in body of HTML
+3) external .js file
+
+head:
+	if you write js code in head, it is loaded even before the page is displayed
+	
+body:
+	if you write js code in body, then understand it is top-down approach
+	the code declared below is not available for code above
+
+	.....	cannot use "i" here. similarly, a function declared/ defined below is not available in the top
+	....
+	...
+	var i;
+
+external:
+	js file is very useful when javascript code is written by someone else, and html is done by someone else
+
+if i code js code inside a function,
+then i have to call the function. only then the function is executed
+
+<script>
+	alert('hi');
+</script>
+
+here, the code is not inside any function. then on loading the page, it is executed
+
+even before the page is displayed, the alert message is seen displayed
+
+
+----------------
+whenever we create a project.
+a project is a folder
+
+all files
+	images
+	css files
+	js files
+	html files
+
+all must be present 
+	directly or
+	in sub folders INSIDE the project folder only
+
+	DO NOT REFER TO IMAGES OUTSIDE PROJECT FOLDER
+
+--------------------------------
+programming constructs
+	if-else
+	switch-case
+	while
+	for
+
+	arrays
+	objects
+	JSON
+
+
+
+
+they gave HTML code
+	<p class="abcd">
+
+	<p id="efgh">
+
+
+you have to write CSS code for that
+
+	<p class="abcd">
+
+	css selectors
+		1) element selector
+		2) ID selector
+		3) class selector
+		4) pseudo selector
+
+class 		.
+id		#
+element		no symbol
+
+.abcd			this means any element whose class is "abcd"
+{
+}
+
+p.abcd			this memans any paragraph whose class is "abcd"
+{
+}
+
+
+
+
+some people "suppose they dont knwo the symbol for class", they change the html code and finally they solve the problem.
+But marks are not given. Because the skeleton is changed
+
+
+
+----------------
+var x=20;
+
+the variable x is a numeric variable now.	This is based on the value entered
+x='rama';
+	the variable x become a string variable now
+
+x=new Date();
+	the variable x become a date object now
+
+
+Activity:
+	identify various data types in jav
+ascript language
+
+
+
+1) undefined				var x;
+2) numeric
+3) string
+4) Date
+5) boolean				true or false
+6) arrays
+7) objects
+			var person = {firstName:"John", lastName:"Doe", age:50, eyeColor:"blue"};
+
+
+
+ if (10 > 25)
+            console.log('ok');
+        else
+            console.log('not ok')
+
+
+if(true)
+{
+}
+else
+{
+}
+
+when there is only 1 line inside true or else part, then no need of {}
+
+if(true)
+	,,,,,
+else if(condition)
+	......
+else
+	......
+&&
+||
+for multiple conditions
+
+true && true		true
+
+
+
+if(x=='ECE')
+
+if(x=='EEE')
+
+consider using switch case
+
+
+OPERATORS:
+	
++
+-
+*
+/
+%
+++
+--
+&&
+||
+
+=		is for assigning value to the variable
+==		is for checking if both operands are equal
+===		is for checking if both operands are same		(same means? value, type all are same)
+
+
+1) datatypes in javascript
+2) operators in javascript
+3) programming constructs
+
+
+when i define a customer
+	customerId	"C001"
+	firstName	"Rama"
+	lastName	"Krishna"
+	
+
+
+
+
+an object in javascript has 
+	properties
+		key-value pair
+
+
+
+array of objects
+	[{},{},{}]
+
+
+use [] for arrays
+
+{} for object
+
+
+
+JSON
+	JavaScript Object Notation
+
+an object in javascript is displayed in JSON 
+	{key:value}
+
+
+
+String to object		JSON.parse
+object to string		JSON.stringify
+
+
+
+in javascript we can store some information in 
+	localStorage		(or)
+	sessionStorage	
+
+sessionStorage is alive only as long as the browser is open. Once closed, it will be destroyed
+
+localStorage is available permanently even if the computer is shutdown, next day also we can see the value
+
+
+Have you seen a login form having
+
+	"Remember Me" option?		(check box)?
+
+
+
+localStorage is very easy to store some information in a computer.
+	if we login from another computer, this information is not available
+
+
+localStorage
+	setItem		store the data in the computer
+	getItem		retrieve data
+	removeItem	remove that item
+
+
+setItem(key,value)
+
+value=getItem(key);
+
+removeItem(key);			//removes the items whose name is given as argument
+
+
+
+
+javascript is running in the client's computer
+
+if we access "facebook" from this computer, then this computer is a client to facebook. Program comes from server. but some programs run in client and some programs run in server (and their output is sent to client)
+
+
+
+
+a=b;			what happens here?
+
+
+
+4614.49123456
+
+I WANT only 2 digits precision
+Math.round() converts decimal floating number into INTEGER only	(NO OPTION FOR HOW MANY DIGITS)
+
+if we need 2 digits precision ,	MULTIPLY BY 100 and ROUND it. then divide by 100
+
+EMI*=100;
+EMI=Math.round(EMI);
+EMI/=100;
+alert(EMI);
